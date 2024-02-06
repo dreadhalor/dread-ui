@@ -6,3 +6,6 @@ export * from "./components/checkbox/checkbox";
 export * from "./components/input/input";
 export * from "./components/label/label";
 export * from "./components/select";
+export * from "./components/date-picker/date-picker";
+export * from "./components/calendar/calendar";
+export * from "./components/popover/popover";
