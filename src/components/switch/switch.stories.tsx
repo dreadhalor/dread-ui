@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import type { Meta, StoryObj } from '@storybook/react';
 import { Switch } from './switch';
 import { Label } from '@/index';
