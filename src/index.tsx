@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 export * from './lib/icons';
+
 export * from './components/accordion/accordion';
 export * from './components/avatar/avatar';
 export * from './components/badge';
