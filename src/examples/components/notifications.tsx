@@ -30,7 +30,7 @@ const notificationOptions = [
   },
 ];
 
-export function NotificationsDemo(_) {
+export function NotificationsDemo() {
   return (
     <Card>
       <CardHeader className='pb-3'>

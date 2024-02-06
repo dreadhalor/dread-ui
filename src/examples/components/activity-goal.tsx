@@ -13,7 +13,7 @@ import { cn } from '@repo/utils';
 
 const bars = [400, 300, 200, 300, 200, 278, 189, 239, 300, 200, 278, 189, 349];
 
-export function ActivityGoalDemo(_) {
+export function ActivityGoalDemo() {
   const [goal, setGoal] = useState(350);
   const min = 200,
     max = 400,

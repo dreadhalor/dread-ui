@@ -17,7 +17,7 @@ import {
   Separator,
 } from '@/index';
 
-export function ShareDocumentDemo(_) {
+export function ShareDocumentDemo() {
   return (
     <Card>
       <CardHeader>

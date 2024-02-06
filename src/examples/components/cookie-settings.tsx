@@ -10,7 +10,7 @@ import {
   Switch,
 } from '@/index';
 
-export function CookieSettingsDemo(_) {
+export function CookieSettingsDemo() {
   return (
     <Card>
       <CardHeader>

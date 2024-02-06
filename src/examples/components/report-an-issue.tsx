@@ -16,7 +16,7 @@ import {
   Textarea,
 } from '@/index';
 
-export function ReportAnIssueDemo(_) {
+export function ReportAnIssueDemo() {
   return (
     <Card>
       <CardHeader>

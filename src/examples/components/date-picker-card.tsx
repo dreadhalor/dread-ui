@@ -14,7 +14,7 @@ import {
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
-export function DatePickerCardDemo(_) {
+export function DatePickerCardDemo() {
   const [mode, setMode] = useState<DatePickerMode>('range');
   const [selected, setSelected] = useState<Date | DateRange>();
 

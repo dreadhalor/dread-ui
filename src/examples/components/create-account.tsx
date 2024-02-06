@@ -11,7 +11,7 @@ import {
   Label,
 } from '@/index';
 
-export function CreateAccountDemo(_) {
+export function CreateAccountDemo() {
   return (
     <Card>
       <CardHeader className='space-y-1'>

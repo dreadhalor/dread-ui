@@ -42,7 +42,7 @@ const recentSales = [
     amount: '+$39.00',
   },
 ];
-export function RecentSalesDemo(_) {
+export function RecentSalesDemo() {
   return (
     <Card>
       <CardHeader>

@@ -14,7 +14,7 @@ import {
   Input,
 } from '@/index';
 
-export function ChatDemo(_) {
+export function ChatDemo() {
   const [messages, setMessages] = React.useState([
     {
       role: 'agent',

@@ -22,7 +22,7 @@ import {
   Separator,
 } from '@/index';
 
-export function GithubCardDemo(_) {
+export function GithubCardDemo() {
   const [futureIdeasChecked, setFutureIdeasChecked] = useState(false);
   const [myStackChecked, setMyStackChecked] = useState(false);
   const [inspirationChecked, setInspirationChecked] = useState(true);

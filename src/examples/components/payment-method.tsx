@@ -25,7 +25,7 @@ const paymentMethods = [
   { icon: Icons.apple, title: 'Apple' },
 ];
 
-export function PaymentMethodDemo(_) {
+export function PaymentMethodDemo() {
   return (
     <Card>
       <CardHeader>

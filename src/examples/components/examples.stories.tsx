@@ -85,7 +85,7 @@ const demos = [
   CookieSettingsDemo,
 ];
 
-function CardsPageDemo(_) {
+function CardsPageDemo() {
   return (
     <div className='@container'>
       <div className='@3xl:columns-2 @7xl:columns-3 gap-6 rounded-lg p-8'>
