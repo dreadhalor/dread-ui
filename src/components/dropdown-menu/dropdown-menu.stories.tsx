@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import type { Meta, StoryObj } from '@storybook/react';
 
 import {
@@ -145,7 +147,8 @@ export const WithLabels: Story = {
   ),
 };
 
-const WithCheckboxItemsComponent = (_) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const WithCheckboxItemsComponent = (_: any) => {
   const [checked, setChecked] = useState(true);
 
   return (
@@ -169,8 +172,8 @@ const WithCheckboxItemsComponent = (_) => {
 export const WithCheckboxItems: Story = {
   render: WithCheckboxItemsComponent,
 };
-
-const WithRadioItemsComponent = (_) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const WithRadioItemsComponent = (_: any) => {
   const [color, setColor] = useState('blue');
 
   return (
@@ -190,8 +193,8 @@ const WithRadioItemsComponent = (_) => {
 export const WithRadioItems: Story = {
   render: WithRadioItemsComponent,
 };
-
-const WithEverythingComponent = (_) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const WithEverythingComponent = (_: any) => {
   const [bookmarksChecked, setBookmarksChecked] = useState(true);
   const [urlsChecked, setUrlsChecked] = useState(false);
   const [person, setPerson] = useState('dread');
