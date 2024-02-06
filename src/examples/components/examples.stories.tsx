@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { cn } from '@src/lib/utils';
+import { cn } from '@repo/utils';
 
 import { CreateAccountDemo } from './create-account';
 import { PaymentMethodDemo } from './payment-method';
@@ -63,8 +63,8 @@ function DemoContainer({
   return (
     <div
       className={cn(
-        '~mb-6 ~flex ~min-w-0 ~break-inside-avoid ~items-center ~justify-center [&>div]:~w-full',
-        className
+        'mb-6 flex min-w-0 break-inside-avoid items-center justify-center [&>div]:w-full',
+        className,
       )}
       {...props}
     />
@@ -87,8 +87,8 @@ const demos = [
 
 function CardsPageDemo(_) {
   return (
-    <div className='~@container'>
-      <div className='~gap-6 ~rounded-lg ~p-8 @3xl:~columns-2 @7xl:~columns-3'>
+    <div className='@container'>
+      <div className='@3xl:columns-2 @7xl:columns-3 gap-6 rounded-lg p-8'>
         {demos.map((Demo, i) => (
           <DemoContainer key={i}>
             <Demo />

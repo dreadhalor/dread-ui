@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
   Textarea,
-} from '@src/index';
+} from '@/index';
 
 export function ReportAnIssueDemo(_) {
   return (
@@ -25,9 +25,9 @@ export function ReportAnIssueDemo(_) {
           What area are you having problems with?
         </CardDescription>
       </CardHeader>
-      <CardContent className='~grid ~gap-6'>
-        <div className='~grid ~grid-cols-2 ~gap-4'>
-          <div className='~grid ~gap-2'>
+      <CardContent className='grid gap-6'>
+        <div className='grid grid-cols-2 gap-4'>
+          <div className='grid gap-2'>
             <Label htmlFor='area'>Area</Label>
             <Select defaultValue='billing'>
               <SelectTrigger id='area'>
@@ -42,13 +42,10 @@ export function ReportAnIssueDemo(_) {
               </SelectContent>
             </Select>
           </div>
-          <div className='~grid ~gap-2'>
+          <div className='grid gap-2'>
             <Label htmlFor='security-level'>Security Level</Label>
             <Select defaultValue='2'>
-              <SelectTrigger
-                id='security-level'
-                className='~line-clamp-1 ~truncate'
-              >
+              <SelectTrigger id='security-level' className='truncate'>
                 <SelectValue placeholder='Select level' />
               </SelectTrigger>
               <SelectContent>
@@ -60,11 +57,11 @@ export function ReportAnIssueDemo(_) {
             </Select>
           </div>
         </div>
-        <div className='~grid ~gap-2'>
+        <div className='grid gap-2'>
           <Label htmlFor='subject'>Subject</Label>
           <Input id='subject' placeholder='I need help with...' />
         </div>
-        <div className='~grid ~gap-2'>
+        <div className='grid gap-2'>
           <Label htmlFor='description'>Description</Label>
           <Textarea
             id='description'
@@ -72,7 +69,7 @@ export function ReportAnIssueDemo(_) {
           />
         </div>
       </CardContent>
-      <CardFooter className='~justify-between ~space-x-2'>
+      <CardFooter className='justify-between space-x-2'>
         <Button variant='ghost'>Cancel</Button>
         <Button>Submit</Button>
       </CardFooter>

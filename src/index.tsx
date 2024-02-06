@@ -11,3 +11,8 @@ export * from './components/calendar/calendar';
 export * from './components/popover/popover';
 export * from './components/card/card';
 export * from './components/avatar/avatar';
+export * from './components/switch/switch';
+export * from './components/radio-group/radio-group';
+export * from './components/dropdown-menu/dropdown-menu';
+export * from './components/separator/separator';
+export * from './components/textarea/textarea';
