@@ -1,8 +1,8 @@
-import React from "react";
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
+import React from 'react';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
+import { CheckIcon } from '@radix-ui/react-icons';
 
-import { cn } from "@repo/utils";
+import { cn } from '@repo/utils';
 
 /** A control that allows the user to toggle between checked & not checked. */
 const Checkbox = React.forwardRef<
@@ -12,20 +12,20 @@ const Checkbox = React.forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
-      "border-primary peer h-4 w-4 shrink-0 rounded-sm border shadow",
-      "focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1",
-      "disabled:cursor-not-allowed disabled:opacity-50",
-      "data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
+      'border-primary peer h-4 w-4 shrink-0 rounded-sm border shadow',
+      'focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1',
+      'disabled:cursor-not-allowed disabled:opacity-50',
+      'data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
       className,
     )}
     {...props}
   >
     <CheckboxPrimitive.Indicator
       className={cn(
-        "flex h-full w-full items-center justify-center text-current",
+        'flex h-full w-full items-center justify-center text-current',
       )}
     >
-      <CheckIcon className="h-4 w-4" />
+      <CheckIcon className='h-4 w-4' />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ));

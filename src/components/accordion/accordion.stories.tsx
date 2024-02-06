@@ -1,28 +1,28 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./accordion";
+} from './accordion';
 
 // Let's put a description here because Storybook is buggy
 /** A vertically stacked set of interactive headings that each reveal a section of content. */
 const meta: Meta<typeof Accordion> = {
   component: Accordion,
-  title: "Components/Accordion",
+  title: 'Components/Accordion',
   argTypes: {
     type: {
-      description: "The accordion type.",
-      options: ["single", "multiple"],
-      control: { type: "select" },
+      description: 'The accordion type.',
+      options: ['single', 'multiple'],
+      control: { type: 'select' },
     },
     // collapsible is only a prop of the 'single' accordion, so just ignore the error when 'multiple' is selected
     collapsible: {
       description:
-        "Whether an accordion item can be collapsed after it has been opened.",
-      control: { type: "boolean" },
+        'Whether an accordion item can be collapsed after it has been opened.',
+      control: { type: 'boolean' },
     },
   },
 };
@@ -33,25 +33,25 @@ type Story = StoryObj<typeof Accordion>;
 /** A basic accordion. */
 export const Demo: Story = {
   args: {
-    type: "single",
+    type: 'single',
     collapsible: true,
   },
   render: (args) => (
-    <Accordion {...args} className="w-full">
-      <AccordionItem value="item-1">
+    <Accordion {...args} className='w-full'>
+      <AccordionItem value='item-1'>
         <AccordionTrigger>Is it accessible?</AccordionTrigger>
         <AccordionContent>
           Yes. It adheres to the WAI-ARIA design pattern.
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="item-2">
+      <AccordionItem value='item-2'>
         <AccordionTrigger>Is it styled?</AccordionTrigger>
         <AccordionContent>
           Yes. It comes with default styles that matches the other
           components&apos; aesthetic.
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="item-3">
+      <AccordionItem value='item-3'>
         <AccordionTrigger>Is it animated?</AccordionTrigger>
         <AccordionContent>
           Yes. It's animated by default, but you can disable it if you prefer.
@@ -64,30 +64,30 @@ export const Demo: Story = {
 /** An accordion that can have multiple panels open at the same time. */
 export const Multiple: Story = {
   args: {
-    type: "multiple",
+    type: 'multiple',
   },
   render: (args) => (
-    <Accordion {...args} className="w-full">
-      <AccordionItem value="item-1">
+    <Accordion {...args} className='w-full'>
+      <AccordionItem value='item-1'>
         <AccordionTrigger>What are the specifications?</AccordionTrigger>
         <AccordionContent>
           Our product adheres to the highest industry standards, providing
           unparalleled performance & quality.
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="item-2">
+      <AccordionItem value='item-2'>
         <AccordionTrigger>Are there customizable options?</AccordionTrigger>
         <AccordionContent>
           Absolutely. The product comes with a variety of customizable options
           to match your specific needs & preferences.
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="item-3">
+      <AccordionItem value='item-3'>
         <AccordionTrigger>
           What about the product's appearance?
         </AccordionTrigger>
         <AccordionContent>
-          <ul className="list-disc pl-5 leading-6">
+          <ul className='list-disc pl-5 leading-6'>
             <li>
               Our design team has meticulously crafted the aesthetics of the
               product, ensuring a sleek & modern look.

@@ -1,11 +1,11 @@
-import React from "react";
-import * as LabelPrimitive from "@radix-ui/react-label";
-import { cva, type VariantProps } from "class-variance-authority";
+import React from 'react';
+import * as LabelPrimitive from '@radix-ui/react-label';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from "@repo/utils";
+import { cn } from '@repo/utils';
 
 const labelVariants = cva(
-  "leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+  'leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
 );
 
 /** An accessible label associated a control. */
