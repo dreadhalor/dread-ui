@@ -12,6 +12,19 @@ import {
 const meta: Meta<typeof Accordion> = {
   component: Accordion,
   title: "Components/Accordion",
+  argTypes: {
+    type: {
+      description: "The accordion type.",
+      options: ["single", "multiple"],
+      control: { type: "select" },
+    },
+    // collapsible is only a prop of the 'single' accordion, so just ignore the error when 'multiple' is selected
+    collapsible: {
+      description:
+        "Whether an accordion item can be collapsed after it has been opened.",
+      control: { type: "boolean" },
+    },
+  },
 };
 
 export default meta;
