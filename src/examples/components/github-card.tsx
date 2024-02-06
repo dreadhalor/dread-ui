@@ -30,7 +30,7 @@ export function GithubCardDemo() {
     <Card>
       <CardHeader className='grid grid-cols-[1fr_110px] items-start gap-4 space-y-0'>
         <div className='space-y-1'>
-          <CardTitle>willow-ui</CardTitle>
+          <CardTitle>dread-ui</CardTitle>
           <CardDescription>
             Beautifully designed components built with shadcn/ui, Radix UI &
             Tailwind CSS.

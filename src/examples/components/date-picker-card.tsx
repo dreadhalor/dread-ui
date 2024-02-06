@@ -26,7 +26,7 @@ export function DatePickerCardDemo() {
   return (
     <Card>
       <CardHeader className='space-y-1'>
-        <CardTitle className='text-2xl'>Date Filter</CardTitle>
+        <CardTitle>Date Filter</CardTitle>
         <CardDescription>Filter your leads by date</CardDescription>
       </CardHeader>
       <CardContent>
