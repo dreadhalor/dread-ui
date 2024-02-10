@@ -10,7 +10,7 @@ import {
   Label,
   RadioGroup,
   RadioGroupItem,
-} from '@/index';
+} from '@dread-ui/index';
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 

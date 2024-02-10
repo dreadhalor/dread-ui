@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
   Separator,
-} from '@/index';
+} from '@dread-ui/index';
 
 export function ShareDocumentDemo() {
   return (

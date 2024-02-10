@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Label } from './label';
-import { Checkbox } from '@/index';
+import { Checkbox } from '@dread-ui/index';
 
 const meta: Meta<typeof Label> = {
   component: Label,

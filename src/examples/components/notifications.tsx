@@ -10,7 +10,7 @@ import {
   CardTitle,
   Label,
   RadioGroup,
-} from '@/index';
+} from '@dread-ui/index';
 
 const notificationOptions = [
   {

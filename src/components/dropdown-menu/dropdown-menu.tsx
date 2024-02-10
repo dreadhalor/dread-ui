@@ -7,7 +7,8 @@ import {
 } from '@radix-ui/react-icons';
 
 import { cn } from '@repo/utils';
-import { Caret } from '@/index';
+// import { Caret } from '../..';
+import { Caret } from '@dread-ui/index';
 
 /** Displays a menu to the user — such as a set of actions or functions — triggered by a button. */
 const DropdownMenu = DropdownMenuPrimitive.Root;

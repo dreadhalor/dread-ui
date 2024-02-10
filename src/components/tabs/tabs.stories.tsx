@@ -10,7 +10,7 @@ import {
   CardTitle,
   Input,
   Label,
-} from '@/index';
+} from '@dread-ui/index';
 
 const meta: Meta<typeof Tabs> = {
   component: Tabs,

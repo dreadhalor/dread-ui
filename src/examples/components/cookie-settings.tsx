@@ -8,7 +8,7 @@ import {
   CardTitle,
   Label,
   Switch,
-} from '@/index';
+} from '@dread-ui/index';
 
 export function CookieSettingsDemo() {
   return (

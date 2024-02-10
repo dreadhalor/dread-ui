@@ -3,7 +3,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { RadioGroup, RadioGroupItem } from './radio-group';
-import { Label } from '@/index';
+import { Label } from '@dread-ui/index';
 
 const meta: Meta<typeof RadioGroup> = {
   component: RadioGroup,

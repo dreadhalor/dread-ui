@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from './dropdown-menu';
 import { useState } from 'react';
-import { Button } from '@/index';
+import { Button } from '@dread-ui/index';
 
 // Let's put a description here because Storybook is buggy
 /** Displays a menu to the user — such as a set of actions or functions — triggered by a button. */

@@ -11,7 +11,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/index';
+} from '@dread-ui/index';
 
 const meta: Meta<typeof Popover> = {
   component: Popover,

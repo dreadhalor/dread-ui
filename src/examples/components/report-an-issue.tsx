@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
   Textarea,
-} from '@/index';
+} from '@dread-ui/index';
 
 export function ReportAnIssueDemo() {
   return (

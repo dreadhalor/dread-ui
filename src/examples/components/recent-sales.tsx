@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/index';
+} from '@dread-ui/index';
 import { getRandomAvatar } from '@repo/utils';
 
 const recentSales = [

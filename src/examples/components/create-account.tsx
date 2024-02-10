@@ -9,7 +9,7 @@ import {
   CardTitle,
   Input,
   Label,
-} from '@/index';
+} from '@dread-ui/index';
 
 export function CreateAccountDemo() {
   return (

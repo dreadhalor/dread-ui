@@ -11,7 +11,7 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@/components",
+    "components": "@dread-ui/components",
     "utils": "@repo/utils"
   }
 }

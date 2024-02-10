@@ -16,7 +16,7 @@ import {
   SelectContent,
   SelectItem,
   Input,
-} from '@/index';
+} from '@dread-ui/index';
 
 const meta: Meta = {
   component: Card,

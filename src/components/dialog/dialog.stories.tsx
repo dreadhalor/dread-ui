@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './dialog';
-import { Button, Input, Label } from '@/index';
+import { Button, Input, Label } from '@dread-ui/index';
 
 // Let's put a description here because Storybook is buggy
 /** A window overlaid on either the primary window or another dialog window, rendering the content underneath inert. */

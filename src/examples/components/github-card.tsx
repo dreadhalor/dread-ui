@@ -20,7 +20,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   Separator,
-} from '@/index';
+} from '@dread-ui/index';
 
 export function GithubCardDemo() {
   const [futureIdeasChecked, setFutureIdeasChecked] = useState(false);

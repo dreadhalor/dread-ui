@@ -17,7 +17,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/index';
+} from '@dread-ui/index';
 
 const paymentMethods = [
   { icon: Icons.card, title: 'Card' },

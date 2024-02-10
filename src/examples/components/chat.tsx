@@ -12,7 +12,7 @@ import {
   CardFooter,
   CardHeader,
   Input,
-} from '@/index';
+} from '@dread-ui/index';
 
 export function ChatDemo() {
   const [messages, setMessages] = React.useState([

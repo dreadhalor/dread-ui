@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Textarea } from './textarea';
-import { Label } from '@/index';
+import { Label } from '@dread-ui/index';
 
 const meta: Meta<typeof Textarea> = {
   component: Textarea,

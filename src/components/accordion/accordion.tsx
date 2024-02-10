@@ -2,7 +2,7 @@ import React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 
 import { cn } from '@repo/utils';
-import { ChevronDown } from '@/index';
+import { ChevronDown } from '@dread-ui/index';
 import { AccordionHeader } from '@radix-ui/react-accordion';
 
 /** A vertically stacked set of interactive headings that each reveal a section of content. */

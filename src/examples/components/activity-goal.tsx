@@ -8,7 +8,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/index';
+} from '@dread-ui/index';
 import { cn } from '@repo/utils';
 
 const bars = [400, 300, 200, 300, 200, 278, 189, 239, 300, 200, 278, 189, 349];

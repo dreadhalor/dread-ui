@@ -13,7 +13,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/index';
+} from '@dread-ui/index';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { cn } from '@repo/utils';
 
