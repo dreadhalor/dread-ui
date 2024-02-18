@@ -37,6 +37,12 @@ export const Variants: Story = {
       <Badge {...args} variant='destructive'>
         Destructive
       </Badge>
+      <Badge {...args} variant='caution'>
+        Caution
+      </Badge>
+      <Badge {...args} variant='success'>
+        Success
+      </Badge>
       <Badge {...args} variant='outline'>
         Outline
       </Badge>
