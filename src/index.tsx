@@ -22,3 +22,4 @@ export * from './components/slider/slider';
 export * from './components/switch/switch';
 export * from './components/tabs/tabs';
 export * from './components/textarea/textarea';
+export * from './components/tooltip/tooltip';
