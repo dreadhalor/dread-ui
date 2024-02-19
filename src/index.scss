@@ -96,3 +96,8 @@
       'calt' 1;
   }
 }
+
+.dropdown-menu-content {
+  width: var(--radix-dropdown-menu-trigger-width);
+  max-height: var(--radix-dropdown-menu-content-available-height);
+}

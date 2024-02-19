@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import {
   Accordion,
   AccordionContent,
+  AccordionHeader,
   AccordionItem,
   AccordionTrigger,
 } from './accordion';
@@ -39,20 +40,26 @@ export const Demo: Story = {
   render: (args) => (
     <Accordion {...args} className='w-full'>
       <AccordionItem value='item-1'>
-        <AccordionTrigger>Is it accessible?</AccordionTrigger>
+        <AccordionHeader>
+          <AccordionTrigger>Is it accessible?</AccordionTrigger>
+        </AccordionHeader>
         <AccordionContent>
           Yes. It adheres to the WAI-ARIA design pattern.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value='item-2'>
-        <AccordionTrigger>Is it styled?</AccordionTrigger>
+        <AccordionHeader>
+          <AccordionTrigger>Is it styled?</AccordionTrigger>
+        </AccordionHeader>
         <AccordionContent>
           Yes. It comes with default styles that matches the other
           components&apos; aesthetic.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value='item-3'>
-        <AccordionTrigger>Is it animated?</AccordionTrigger>
+        <AccordionHeader>
+          <AccordionTrigger>Is it animated?</AccordionTrigger>
+        </AccordionHeader>
         <AccordionContent>
           Yes. It's animated by default, but you can disable it if you prefer.
         </AccordionContent>
@@ -69,23 +76,29 @@ export const Multiple: Story = {
   render: (args) => (
     <Accordion {...args} className='w-full'>
       <AccordionItem value='item-1'>
-        <AccordionTrigger>What are the specifications?</AccordionTrigger>
+        <AccordionHeader>
+          <AccordionTrigger>What are the specifications?</AccordionTrigger>
+        </AccordionHeader>
         <AccordionContent>
           Our product adheres to the highest industry standards, providing
           unparalleled performance & quality.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value='item-2'>
-        <AccordionTrigger>Are there customizable options?</AccordionTrigger>
+        <AccordionHeader>
+          <AccordionTrigger>Are there customizable options?</AccordionTrigger>
+        </AccordionHeader>
         <AccordionContent>
           Absolutely. The product comes with a variety of customizable options
           to match your specific needs & preferences.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value='item-3'>
-        <AccordionTrigger>
-          What about the product's appearance?
-        </AccordionTrigger>
+        <AccordionHeader>
+          <AccordionTrigger>
+            What about the product's appearance?
+          </AccordionTrigger>
+        </AccordionHeader>
         <AccordionContent>
           <ul className='list-disc pl-5 leading-6'>
             <li>
