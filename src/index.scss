@@ -1,10 +1,14 @@
+@import './assets/typekit.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --font-sans: filson-pro, sans-serif;
+    --font-serif: moret, serif;
+
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
     line-height: 1.5;
@@ -94,6 +98,56 @@
     font-feature-settings:
       'rlig' 1,
       'calt' 1;
+  }
+}
+
+@layer components {
+  .body-large {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 425;
+    line-height: 24px;
+    letter-spacing: 0;
+  }
+
+  .body-medium {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0;
+  }
+
+  .body-small {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0;
+  }
+
+  .body-x-small {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 425;
+    line-height: 16px;
+    letter-spacing: 0;
+  }
+
+  .caption-1 {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .caption-2 {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 425;
+    line-height: 20px;
+    letter-spacing: 0.02em;
   }
 }
 
