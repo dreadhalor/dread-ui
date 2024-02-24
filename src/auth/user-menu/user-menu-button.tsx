@@ -8,7 +8,7 @@ import { createAvatar } from '@dicebear/core';
 import { thumbs } from '@dicebear/collection';
 
 const UserMenuButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ ...props }, ref) => {
+  ({ className, ...props }, ref) => {
     const { isOpen } = useUserMenuContext();
     const { loading, uid, signedIn } = useAuth();
 
@@ -29,6 +29,7 @@ const UserMenuButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'bg-grey-200 group relative flex h-[50px] w-[50px] shrink-0 grow-0 items-center justify-center overflow-hidden rounded-full border-0 p-0 text-[#3ea6ff] shadow-none transition-colors',
           'hover:bg-[#6ebcff33]',
           isOpen && 'bg-[#6ebcff33]',
+          className,
         )}
       >
         {!loading && (

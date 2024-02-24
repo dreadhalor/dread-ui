@@ -25,5 +25,5 @@ export * from './components/tabs/tabs';
 export * from './components/textarea/textarea';
 export * from './components/tooltip/tooltip';
 
-export * from './auth/user-menu/user-menu';
+export * from './auth/user-menu';
 export * from './providers/auth-provider';

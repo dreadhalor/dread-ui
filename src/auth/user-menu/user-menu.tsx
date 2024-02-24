@@ -7,6 +7,7 @@ import {
 import React, { createContext, useContext, useState } from 'react';
 import { UserMenuButton } from './user-menu-button';
 import { useAuth } from '@dread-ui/providers/auth-provider';
+import { BsGoogle } from 'react-icons/bs';
 
 interface UserMenuContextValue {
   isOpen: boolean;
@@ -26,7 +27,20 @@ export const useUserMenuContext = () => {
   return context;
 };
 
-const UserMenu = () => {
+type UserMenuProps = {
+  className?: string;
+  onLogout?: () => void;
+  skipAchievements?: boolean;
+  skipLogin?: boolean;
+  children?: React.ReactNode;
+};
+const UserMenu = ({
+  className,
+  onLogout,
+  skipAchievements = false,
+  skipLogin = false,
+  children,
+}: UserMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { signInWithGoogle, signedIn, handleLogout } = useAuth();
 
@@ -34,19 +48,35 @@ const UserMenu = () => {
     <UserMenuContext.Provider value={{ isOpen, setIsOpen }}>
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
-          <UserMenuButton />
+          <UserMenuButton className={className} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>Achievements</DropdownMenuItem>
-          <DropdownMenuItem>Toggle Notifications</DropdownMenuItem>
-          <DropdownMenuItem>Toggle Badges</DropdownMenuItem>
-          {!signedIn && (
+          {children}
+          {!skipAchievements && (
+            <>
+              <DropdownMenuItem>Achievements</DropdownMenuItem>
+              <DropdownMenuItem>Toggle Notifications</DropdownMenuItem>
+              <DropdownMenuItem>Toggle Badges</DropdownMenuItem>
+            </>
+          )}
+          {!signedIn && !skipLogin && (
             <DropdownMenuItem onSelect={signInWithGoogle}>
-              Sign In&nbsp;&nbsp;🎉
+              <span className='flex items-center gap-[16px]'>
+                <BsGoogle />
+                Sign In&nbsp;&nbsp;🎉
+              </span>
             </DropdownMenuItem>
           )}
           {signedIn && (
-            <DropdownMenuItem onSelect={handleLogout}>Logout</DropdownMenuItem>
+            <DropdownMenuItem
+              onSelect={() => {
+                handleLogout().then((loggedOut) => {
+                  if (loggedOut && onLogout) onLogout();
+                });
+              }}
+            >
+              Logout
+            </DropdownMenuItem>
           )}
         </DropdownMenuContent>
       </DropdownMenu>

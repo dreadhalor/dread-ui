@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 
 const buttonVariants = cva(
   [
-    'caption-1 inline-flex h-12 items-center justify-center rounded-full px-6 transition-colors',
+    'caption-1 inline-flex h-12 items-center justify-center rounded-full border border-transparent px-6 transition-colors',
     'focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-2',
     'disabled:pointer-events-none disabled:opacity-50',
   ],
@@ -14,7 +14,7 @@ const buttonVariants = cva(
         destructive:
           'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
         outline:
-          'border-border hover:bg-accent hover:text-accent-foreground border bg-transparent shadow-sm',
+          'border-border hover:bg-accent hover:text-accent-foreground bg-transparent shadow-sm',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
