@@ -18,8 +18,12 @@ export * from './components/radio-group/radio-group';
 export * from './components/resizable/resizable';
 export * from './components/select';
 export * from './components/separator/separator';
+export * from './components/skeleton/skeleton';
 export * from './components/slider/slider';
 export * from './components/switch/switch';
 export * from './components/tabs/tabs';
 export * from './components/textarea/textarea';
 export * from './components/tooltip/tooltip';
+
+export * from './auth/user-menu-button/user-menu';
+export * from './providers/auth-provider';
