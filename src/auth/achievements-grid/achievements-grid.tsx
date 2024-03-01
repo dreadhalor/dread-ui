@@ -8,7 +8,7 @@ const AchievementsGrid = () => {
   const [selectedAchievement, setSelectedAchievement] =
     useState<Achievement | null>(null);
 
-  const selectAchievement = (achievement: Achievement) => {
+  const selectAchievement = (achievement: Achievement | null) => {
     setSelectedAchievement(achievement);
   };
 
