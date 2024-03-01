@@ -15,6 +15,7 @@ interface BaseAchievement extends BaseAchievementData {
 }
 
 interface UserAchievementData {
+  uid: string;
   unlockedAt: Timestamp | null;
   state: 'locked' | 'newly_unlocked' | 'unlocked';
 }
