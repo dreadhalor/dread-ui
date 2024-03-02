@@ -42,12 +42,17 @@ export interface AchievementsContextValue {
   toggleAchievement: (achievement: Achievement) => Promise<void>;
 }
 
-export const AchievementsContext = createContext(
-  {} as AchievementsContextValue,
-);
+const AchievementsContext = createContext({} as AchievementsContextValue);
 
-export const useAchievements = (): AchievementsContextValue =>
-  useContext(AchievementsContext);
+export const useAchievements = (): AchievementsContextValue => {
+  const context = useContext(AchievementsContext);
+  if (!context) {
+    throw new Error(
+      'useAchievements must be used within an AchievementsProvider',
+    );
+  }
+  return context;
+};
 
 interface Props {
   children: React.ReactNode;
@@ -64,7 +69,6 @@ export const AchievementsProvider = ({ children }: Props) => {
     if (!uid) return;
 
     const userAchievement = extractUserAchievement(achievement);
-    console.log('saving achievement', userAchievement);
     await _saveAchievement(userAchievement);
   };
 

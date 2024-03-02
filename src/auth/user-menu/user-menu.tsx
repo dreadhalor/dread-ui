@@ -1,4 +1,7 @@
 import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -8,6 +11,7 @@ import React, { createContext, useContext, useState } from 'react';
 import { UserMenuButton } from './user-menu-button';
 import { useAuth } from '@dread-ui/providers/auth-provider';
 import { BsGoogle } from 'react-icons/bs';
+import { AchievementsGrid } from '../achievements-grid/achievements-grid';
 
 interface UserMenuContextValue {
   isOpen: boolean;
@@ -46,40 +50,47 @@ const UserMenu = ({
 
   return (
     <UserMenuContext.Provider value={{ isOpen, setIsOpen }}>
-      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-        <DropdownMenuTrigger asChild>
-          <UserMenuButton className={className} />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          {children}
-          {!skipAchievements && (
-            <>
-              <DropdownMenuItem>Achievements</DropdownMenuItem>
-              <DropdownMenuItem>Toggle Notifications</DropdownMenuItem>
-              <DropdownMenuItem>Toggle Badges</DropdownMenuItem>
-            </>
-          )}
-          {!signedIn && !skipLogin && (
-            <DropdownMenuItem onSelect={signInWithGoogle}>
-              <span className='flex items-center gap-[16px]'>
-                <BsGoogle />
-                Sign In&nbsp;&nbsp;🎉
-              </span>
-            </DropdownMenuItem>
-          )}
-          {signedIn && (
-            <DropdownMenuItem
-              onSelect={() => {
-                handleLogout().then((loggedOut) => {
-                  if (loggedOut && onLogout) onLogout();
-                });
-              }}
-            >
-              Logout
-            </DropdownMenuItem>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Dialog>
+        <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+          <DropdownMenuTrigger asChild>
+            <UserMenuButton className={className} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {children}
+            {!skipAchievements && (
+              <>
+                <DialogTrigger asChild>
+                  <DropdownMenuItem>Achievements</DropdownMenuItem>
+                </DialogTrigger>
+                <DropdownMenuItem>Toggle Notifications</DropdownMenuItem>
+                <DropdownMenuItem>Toggle Badges</DropdownMenuItem>
+              </>
+            )}
+            {!signedIn && !skipLogin && (
+              <DropdownMenuItem onSelect={signInWithGoogle}>
+                <span className='flex items-center gap-[16px]'>
+                  <BsGoogle />
+                  Sign In&nbsp;&nbsp;🎉
+                </span>
+              </DropdownMenuItem>
+            )}
+            {signedIn && (
+              <DropdownMenuItem
+                onSelect={() => {
+                  handleLogout().then((loggedOut) => {
+                    if (loggedOut && onLogout) onLogout();
+                  });
+                }}
+              >
+                Logout
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DialogContent>
+          <AchievementsGrid />
+        </DialogContent>
+      </Dialog>
     </UserMenuContext.Provider>
   );
 };

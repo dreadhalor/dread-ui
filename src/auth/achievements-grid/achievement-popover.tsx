@@ -22,7 +22,12 @@ const AchievementPopover = ({
       }}
     >
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent align='center' side='top' sideOffset={10}>
+      <PopoverContent
+        align='center'
+        side='top'
+        sideOffset={10}
+        className='max-w-[300px]'
+      >
         <div>
           <div>{achievement.title}</div>
           <div>{achievement.description}</div>
