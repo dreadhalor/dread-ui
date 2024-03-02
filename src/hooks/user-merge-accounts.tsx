@@ -15,9 +15,6 @@ export function useMergeAccounts() {
         [fetchUserAchievements(localUid), fetchUserAchievements(remoteUid)],
       );
 
-      console.log('localUserAchievements', localUserAchievements);
-      console.log('remoteUserAchievements', remoteUserAchievements);
-
       const mergedPromises = localUserAchievements.map(
         async (localUserAchievement) => {
           const remoteUserAchievement = remoteUserAchievements.find(
