@@ -117,8 +117,21 @@ export const useDB = () => {
     });
   };
 
+  const fetchUserAchievements = async (
+    uid: string | null,
+  ): Promise<UserAchievement[]> => {
+    if (!uid) return Promise.resolve([]);
+    const achievementsCollection = query(
+      collectionGroup(db, 'userAchievements'),
+      where('uid', '==', uid),
+    );
+    const querySnapshot = await getDocs(achievementsCollection);
+    return querySnapshot.docs.map((doc) => convertDBUserAchievement(doc));
+  };
+
   return {
     db,
+    fetchUserAchievements,
     subscribeToUserAchievements,
     subscribeToGameAchievements,
     saveAchievement,

@@ -1,6 +1,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
   DialogTrigger,
   DropdownMenu,
   DropdownMenuContent,
@@ -88,6 +89,7 @@ const UserMenu = ({
           </DropdownMenuContent>
         </DropdownMenu>
         <DialogContent>
+          <DialogHeader>Achievements</DialogHeader>
           <AchievementsGrid />
         </DialogContent>
       </Dialog>

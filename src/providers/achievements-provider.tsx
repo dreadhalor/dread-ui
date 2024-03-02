@@ -22,10 +22,11 @@ import {
   GameAchievements,
   UserAchievement,
 } from '@dread-ui/types';
-import { useAuth } from '..';
+import { useAuth, toast } from '@dread-ui/index';
 import { useDB } from '@dread-ui/hooks/use-db';
 import { useAchievementsData } from '@dread-ui/hooks/use-achievements-data';
 import { useFullAchievements } from '@dread-ui/hooks/use-full-achievements';
+import { useMergeAccounts } from '@dread-ui/hooks/user-merge-accounts';
 
 const convertDBGameAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
   const data = doc.data() as BaseAchievementData;
@@ -40,6 +41,8 @@ export interface AchievementsContextValue {
   allAchievements: BaseAchievement[];
   achievements: Achievement[];
   toggleAchievement: (achievement: Achievement) => Promise<void>;
+  unlockAchievementById: (id: string, gameId?: string) => Promise<void>;
+  isUnlockable: (achievementId: string, gameId: string) => boolean;
 }
 
 const AchievementsContext = createContext({} as AchievementsContextValue);
@@ -64,6 +67,7 @@ export const AchievementsProvider = ({ children }: Props) => {
   const { db, saveAchievement: _saveAchievement, deleteAchievement } = useDB();
   const { userAchievements } = useAchievementsData(uid);
   const { achievements } = useFullAchievements(uid);
+  useMergeAccounts();
 
   const saveAchievement = async (achievement: Achievement) => {
     if (!uid) return;
@@ -92,11 +96,13 @@ export const AchievementsProvider = ({ children }: Props) => {
     if (achievement.state === state) return;
 
     if (state === 'unlocked' && achievement.state === 'locked') {
-      console.log('unlocking achievement', achievement);
       achievement.state = 'newly_unlocked';
       achievement.unlockedAt = Timestamp.now();
       // if (userPreferences.showNotifications)
       //   openNotification(achievement.title, achievement.description);
+      toast(achievement.title, {
+        description: achievement.description,
+      });
     }
 
     state === 'unlocked'
@@ -130,10 +136,21 @@ export const AchievementsProvider = ({ children }: Props) => {
 
   const toggleAchievement = async (achievement: Achievement) => {
     const userAchievement = extractUserAchievement(achievement);
-    console.log('userAchievement', userAchievement);
     userAchievement.state === 'locked'
       ? await unlockAchievement(achievement)
       : await lockAchievement(achievement);
+  };
+
+  const isUnlockable = (achievementId: string, gameId: string) => {
+    return (
+      achievements.find(
+        (achievement) =>
+          achievement.uid === uid &&
+          achievement.gameId === gameId &&
+          achievement.id === achievementId &&
+          achievement.state === 'locked',
+      ) !== undefined
+    );
   };
 
   const fetchAllGameAchievements = async (): Promise<BaseAchievement[]> => {
@@ -155,10 +172,6 @@ export const AchievementsProvider = ({ children }: Props) => {
     });
   }, [setAllAchievements]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    console.log('userAchievements', userAchievements);
-  }, [userAchievements]);
-
   const fetchGameAchievements = async (gameId: string): Promise<any> => {
     const q = query(collection(db, `games/${gameId}/achievements`));
     const querySnapshot = await getDocs(q);
@@ -167,7 +180,13 @@ export const AchievementsProvider = ({ children }: Props) => {
 
   return (
     <AchievementsContext.Provider
-      value={{ allAchievements, achievements, toggleAchievement }}
+      value={{
+        allAchievements,
+        achievements,
+        toggleAchievement,
+        unlockAchievementById,
+        isUnlockable,
+      }}
     >
       {children}
     </AchievementsContext.Provider>

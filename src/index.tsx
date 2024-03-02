@@ -20,6 +20,7 @@ export * from './ui/select';
 export * from './ui/separator/separator';
 export * from './ui/skeleton/skeleton';
 export * from './ui/slider/slider';
+export * from './ui/sonner/sonner';
 export * from './ui/switch/switch';
 export * from './ui/tabs/tabs';
 export * from './ui/textarea/textarea';
@@ -27,3 +28,5 @@ export * from './ui/tooltip/tooltip';
 
 export * from './auth/user-menu';
 export * from './providers/auth-provider';
+export * from './providers/achievements-provider';
+export * from './providers/dread-ui-provider';
