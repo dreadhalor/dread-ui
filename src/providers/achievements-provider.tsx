@@ -1,30 +1,21 @@
 import {
-  getFirestore,
   collection,
   query,
   getDocs,
-  doc,
-  setDoc,
-  deleteDoc,
-  connectFirestoreEmulator,
-  onSnapshot,
   QueryDocumentSnapshot,
   DocumentData,
   collectionGroup,
   Timestamp,
 } from 'firebase/firestore';
-import { getApp, getApps, initializeApp } from 'firebase/app';
 import { createContext, useContext, useEffect, useState } from 'react';
 import {
   Achievement,
   BaseAchievement,
   BaseAchievementData,
-  GameAchievements,
   UserAchievement,
 } from '@dread-ui/types';
 import { useAuth, toast } from '@dread-ui/index';
 import { useDB } from '@dread-ui/hooks/use-db';
-import { useAchievementsData } from '@dread-ui/hooks/use-achievements-data';
 import { useFullAchievements } from '@dread-ui/hooks/use-full-achievements';
 import { useMergeAccounts } from '@dread-ui/hooks/user-merge-accounts';
 
@@ -65,7 +56,7 @@ export const AchievementsProvider = ({ children }: Props) => {
 
   const { uid } = useAuth();
   const { db, saveAchievement: _saveAchievement, deleteAchievement } = useDB();
-  const { userAchievements } = useAchievementsData(uid);
+  // const { userAchievements } = useAchievementsData(uid);
   const { achievements } = useFullAchievements(uid);
   useMergeAccounts();
 
@@ -154,6 +145,7 @@ export const AchievementsProvider = ({ children }: Props) => {
   };
 
   const fetchAllGameAchievements = async (): Promise<BaseAchievement[]> => {
+    if (!db) return [];
     const q = query(collectionGroup(db, 'achievements'));
     const res = getDocs(q)
       .then((querySnapshot) =>
@@ -173,6 +165,7 @@ export const AchievementsProvider = ({ children }: Props) => {
   }, [setAllAchievements]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchGameAchievements = async (gameId: string): Promise<any> => {
+    if (!db) return [];
     const q = query(collection(db, `games/${gameId}/achievements`));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => convertDBGameAchievement(doc));

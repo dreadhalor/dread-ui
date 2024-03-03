@@ -3,11 +3,12 @@ import {
   type UserCredential,
   signInWithPopup,
   signOut,
+  Auth,
 } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { initializeApp } from 'firebase/app';
+import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator } from 'firebase/auth';
 
 // Firebase v9+: pull from .env
@@ -45,11 +46,25 @@ export const AuthProvider = ({ children }: Props) => {
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const app = initializeApp(firebaseConfig);
-
-  const auth = getAuth(app);
+  const [app, setApp] = useState<FirebaseApp | null>(null);
+  const [auth, setAuth] = useState<Auth | null>(null);
 
   useEffect(() => {
+    const _app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    setApp(_app);
+  }, []);
+
+  useEffect(() => {
+    if (!app) return;
+    setAuth(getAuth(app));
+  }, [app]);
+
+  // const app = initializeApp(firebaseConfig);
+
+  // const auth = getAuth(app);
+
+  useEffect(() => {
+    if (!auth || !app) return;
     if (location.hostname === 'localhost') {
       connectAuthEmulator(auth, 'http://localhost:9099', {
         disableWarnings: true,
@@ -79,11 +94,12 @@ export const AuthProvider = ({ children }: Props) => {
     });
 
     return () => unsubscribe();
-  }, [auth]);
+  }, [auth, app]);
 
   // sign in with a Google popup
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
+    if (!auth) return null;
     try {
       const result = await signInWithPopup(auth, provider);
       if (result) {
@@ -108,6 +124,7 @@ export const AuthProvider = ({ children }: Props) => {
   };
 
   const handleLogout = async () => {
+    if (!auth) return false;
     try {
       await signOut(auth);
       return true;

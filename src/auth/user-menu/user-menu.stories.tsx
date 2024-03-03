@@ -1,19 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { UserMenu } from './user-menu';
-import { AuthProvider } from '@dread-ui/providers/auth-provider';
-import { AchievementsProvider } from '@dread-ui/providers/achievements-provider';
+import { DreadUiProvider } from '@dread-ui/index';
 
 const meta: Meta<typeof UserMenu> = {
   component: UserMenu,
   title: 'Firebase/User Menu',
   decorators: [
     (Story) => (
-      <AuthProvider>
-        <AchievementsProvider>
-          <Story />
-        </AchievementsProvider>
-      </AuthProvider>
+      <DreadUiProvider>
+        <Story />
+      </DreadUiProvider>
     ),
   ],
 };

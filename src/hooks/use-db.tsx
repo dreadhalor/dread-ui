@@ -1,6 +1,5 @@
 import {
   getFirestore,
-  collection,
   query,
   getDocs,
   doc,
@@ -12,16 +11,16 @@ import {
   DocumentData,
   collectionGroup,
   where,
+  Firestore,
 } from 'firebase/firestore';
 import {
   BaseAchievement,
   BaseAchievementData,
   UserAchievementData,
   UserAchievement,
-  UserPreferences,
-  UserPreferencesData,
 } from '@dread-ui/types';
-import { getApp, getApps, initializeApp } from 'firebase/app';
+import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';
+import { useEffect, useState } from 'react';
 
 // Firebase v9+: pull from .env
 const firebaseConfig = {
@@ -32,39 +31,6 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-};
-
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore(app);
-
-// Connect to Firestore emulator if the host is localhost
-if (location.hostname === 'localhost') {
-  connectFirestoreEmulator(db, 'localhost', 8080);
-}
-
-const saveAchievement = async (
-  achievement: UserAchievement,
-): Promise<UserAchievement> => {
-  const { id, gameId, uid, state, unlockedAt } = achievement;
-  const dbAchievement: UserAchievementData = { state, unlockedAt, uid };
-  await setDoc(
-    doc(db, `users/${uid}/games/${gameId}/userAchievements/${id}`),
-    dbAchievement,
-  );
-  return achievement;
-};
-
-const deleteAchievement = async (
-  achievement_id: string,
-  game_id: string,
-  user_id: string,
-): Promise<void> => {
-  await deleteDoc(
-    doc(
-      db,
-      `users/${user_id}/games/${game_id}/userAchievements/${achievement_id}`,
-    ),
-  );
 };
 
 const convertDBGameAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
@@ -87,9 +53,31 @@ const convertDBUserAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
 };
 
 export const useDB = () => {
+  const [app, setApp] = useState<FirebaseApp | null>(null);
+  const [db, setDb] = useState<Firestore | null>(null);
+
+  useEffect(() => {
+    const _app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    setApp(_app);
+  }, []);
+
+  useEffect(() => {
+    if (!app) return;
+    setDb(getFirestore(app));
+  }, [app]);
+
+  useEffect(() => {
+    if (!db || !app) return;
+    // Connect to Firestore emulator if the host is localhost
+    if (location.hostname === 'localhost') {
+      connectFirestoreEmulator(db, 'localhost', 8080);
+    }
+  }, [db, app]);
+
   const subscribeToGameAchievements = (
     callback: (achievements: BaseAchievement[]) => void,
   ) => {
+    if (!db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
     const q = query(collectionGroup(db, 'achievements'));
     return onSnapshot(q, (querySnapshot) => {
       const achievements = querySnapshot.docs.map((doc) =>
@@ -103,7 +91,7 @@ export const useDB = () => {
     uid: string | null,
     callback: (achievements: UserAchievement[]) => void,
   ): (() => void) => {
-    if (!uid) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+    if (!uid || !db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
 
     const q = query(
       collectionGroup(db, 'userAchievements'),
@@ -120,13 +108,40 @@ export const useDB = () => {
   const fetchUserAchievements = async (
     uid: string | null,
   ): Promise<UserAchievement[]> => {
-    if (!uid) return Promise.resolve([]);
+    if (!uid || !db) return Promise.resolve([]);
     const achievementsCollection = query(
       collectionGroup(db, 'userAchievements'),
       where('uid', '==', uid),
     );
     const querySnapshot = await getDocs(achievementsCollection);
     return querySnapshot.docs.map((doc) => convertDBUserAchievement(doc));
+  };
+
+  const saveAchievement = async (
+    achievement: UserAchievement,
+  ): Promise<UserAchievement> => {
+    if (!db) throw new Error('Firestore not initialized');
+    const { id, gameId, uid, state, unlockedAt } = achievement;
+    const dbAchievement: UserAchievementData = { state, unlockedAt, uid };
+    await setDoc(
+      doc(db, `users/${uid}/games/${gameId}/userAchievements/${id}`),
+      dbAchievement,
+    );
+    return achievement;
+  };
+
+  const deleteAchievement = async (
+    achievement_id: string,
+    game_id: string,
+    user_id: string,
+  ): Promise<void> => {
+    if (!db) throw new Error('Firestore not initialized');
+    await deleteDoc(
+      doc(
+        db,
+        `users/${user_id}/games/${game_id}/userAchievements/${achievement_id}`,
+      ),
+    );
   };
 
   return {
