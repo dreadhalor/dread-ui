@@ -1,5 +1,5 @@
 import {
-  collection,
+  // collection,
   query,
   getDocs,
   QueryDocumentSnapshot,
@@ -164,12 +164,12 @@ export const AchievementsProvider = ({ children }: Props) => {
     });
   }, [setAllAchievements]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const fetchGameAchievements = async (gameId: string): Promise<any> => {
-    if (!db) return [];
-    const q = query(collection(db, `games/${gameId}/achievements`));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map((doc) => convertDBGameAchievement(doc));
-  };
+  // const fetchGameAchievements = async (gameId: string): Promise<any> => {
+  //   if (!db) return [];
+  //   const q = query(collection(db, `games/${gameId}/achievements`));
+  //   const querySnapshot = await getDocs(q);
+  //   return querySnapshot.docs.map((doc) => convertDBGameAchievement(doc));
+  // };
 
   return (
     <AchievementsContext.Provider
