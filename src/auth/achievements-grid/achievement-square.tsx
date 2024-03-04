@@ -30,18 +30,8 @@ const AchievementSquare = ({
         onClick={() => selectAchievement(achievement)}
         onDoubleClick={() => toggleAchievement(achievement)}
       >
-        {/* <div className='text-xs'>{achievement.gameId}</div>
-        <div className='text-xs'>{achievement.title}</div>
-        <div className='text-xs'>{achievement.description}</div>
-        <div className='text-xs'>{achievement.state}</div> */}
         {achievement.state === 'newly_unlocked' && (
           <FaExclamationCircle className='absolute right-0 top-0 text-yellow-300' />
-          // style={{
-          //   color: 'gold',
-          //   position: 'absolute',
-          //   top: 5,
-          //   right: 5,
-          // }}
         )}
       </div>
     </AchievementPopover>

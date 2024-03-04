@@ -22,6 +22,7 @@ export function useAchievementsData(uid: string | null) {
       gameUnsubscribe();
       userUnsubscribe();
     };
+    // when I add the subscribe functions to the dependency array, the app crashes
   }, [uid]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return { gameAchievements, userAchievements };

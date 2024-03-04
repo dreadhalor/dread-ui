@@ -55,5 +55,5 @@ export function useMergeAccounts() {
         'mergeAccounts',
         handleMergeAccounts as EventListener,
       );
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [fetchUserAchievements, saveAchievement, deleteAchievement]);
 }

@@ -144,25 +144,25 @@ export const AchievementsProvider = ({ children }: Props) => {
     );
   };
 
-  const fetchAllGameAchievements = async (): Promise<BaseAchievement[]> => {
-    if (!db) return [];
-    const q = query(collectionGroup(db, 'achievements'));
-    const res = getDocs(q)
-      .then((querySnapshot) =>
-        querySnapshot.docs.map((doc) => convertDBGameAchievement(doc)),
-      )
-      .catch((error) => {
-        console.log('Error getting documents: ', error);
-        return [];
-      });
-    return res;
-  };
-
   useEffect(() => {
+    const fetchAllGameAchievements = async (): Promise<BaseAchievement[]> => {
+      if (!db) return [];
+      const q = query(collectionGroup(db, 'achievements'));
+      const res = getDocs(q)
+        .then((querySnapshot) =>
+          querySnapshot.docs.map((doc) => convertDBGameAchievement(doc)),
+        )
+        .catch((error) => {
+          console.log('Error getting documents: ', error);
+          return [];
+        });
+      return res;
+    };
+
     fetchAllGameAchievements().then((achievements) => {
       setAllAchievements(achievements);
     });
-  }, [setAllAchievements]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [setAllAchievements, db]);
 
   // const fetchGameAchievements = async (gameId: string): Promise<any> => {
   //   if (!db) return [];

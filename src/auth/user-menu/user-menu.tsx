@@ -88,7 +88,7 @@ const UserMenu = ({
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-        <DialogContent>
+        <DialogContent overlayClassName='bg-black/60'>
           <DialogHeader>Achievements</DialogHeader>
           <AchievementsGrid />
         </DialogContent>
