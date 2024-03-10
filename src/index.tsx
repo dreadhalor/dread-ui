@@ -25,8 +25,10 @@ export * from './ui/switch/switch';
 export * from './ui/tabs/tabs';
 export * from './ui/textarea/textarea';
 export * from './ui/tooltip/tooltip';
+export * from './misc/iframe-provider';
 
 export * from './auth/user-menu';
 export * from './providers/auth-provider';
 export * from './providers/achievements-provider';
 export * from './providers/dread-ui-provider';
+export * from './providers/iframe-provider';
