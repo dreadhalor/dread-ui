@@ -1,17 +1,14 @@
 import {
-  getFirestore,
   query,
   getDocs,
   doc,
   setDoc,
   deleteDoc,
-  connectFirestoreEmulator,
   onSnapshot,
   QueryDocumentSnapshot,
   DocumentData,
   collectionGroup,
   where,
-  Firestore,
   getDoc,
 } from 'firebase/firestore';
 import {
@@ -22,19 +19,7 @@ import {
   UserPreferencesData,
   UserPreferences,
 } from '@dread-ui/types';
-import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';
-import { useEffect, useState } from 'react';
-
-// Firebase v9+: pull from .env
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-};
+import { db } from '@repo/utils';
 
 const convertDBGameAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
   const data = doc.data() as BaseAchievementData;
@@ -56,27 +41,6 @@ const convertDBUserAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
 };
 
 export const useDB = () => {
-  const [app, setApp] = useState<FirebaseApp | null>(null);
-  const [db, setDb] = useState<Firestore | null>(null);
-
-  useEffect(() => {
-    const _app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    setApp(_app);
-  }, []);
-
-  useEffect(() => {
-    if (!app) return;
-    setDb(getFirestore(app));
-  }, [app]);
-
-  useEffect(() => {
-    if (!db || !app) return;
-    // Connect to Firestore emulator if the host is localhost
-    if (location.hostname === 'localhost') {
-      connectFirestoreEmulator(db, 'localhost', 8080);
-    }
-  }, [db, app]);
-
   const subscribeToGameAchievements = (
     callback: (achievements: BaseAchievement[]) => void,
   ) => {
@@ -173,7 +137,7 @@ export const useDB = () => {
     callback: (preferences: UserPreferencesData) => void,
   ): (() => void) => {
     if (!uid) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
-    if (!db) throw new Error('Firestore not initialized');
+    if (!db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
 
     const userDoc = doc(db, `users/${uid}`);
 

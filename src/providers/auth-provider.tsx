@@ -3,24 +3,11 @@ import {
   type UserCredential,
   signInWithPopup,
   signOut,
-  Auth,
 } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
-
-// Firebase v9+: pull from .env
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-};
+import { auth } from '@repo/utils';
 
 export interface AuthContextValue {
   uid: string | null;
@@ -46,31 +33,7 @@ export const AuthProvider = ({ children }: Props) => {
   const [signedIn, setSignedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const [app, setApp] = useState<FirebaseApp | null>(null);
-  const [auth, setAuth] = useState<Auth | null>(null);
-
   useEffect(() => {
-    const _app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    setApp(_app);
-  }, []);
-
-  useEffect(() => {
-    if (!app) return;
-    setAuth(getAuth(app));
-  }, [app]);
-
-  // const app = initializeApp(firebaseConfig);
-
-  // const auth = getAuth(app);
-
-  useEffect(() => {
-    if (!auth || !app) return;
-    if (location.hostname === 'localhost') {
-      connectAuthEmulator(auth, 'http://localhost:9099', {
-        disableWarnings: true,
-      });
-    }
-
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         setUid(authUser.uid);
@@ -94,7 +57,7 @@ export const AuthProvider = ({ children }: Props) => {
     });
 
     return () => unsubscribe();
-  }, [auth, app]);
+  }, [setUid, setDisplayName, setSignedIn, setLoading]);
 
   // sign in with a Google popup
   const signInWithGoogle = async () => {
