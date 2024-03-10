@@ -1,10 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type IframeContextValue = {
-  receivedMessage: string;
-  setReceivedMessage: React.Dispatch<React.SetStateAction<string>>;
-  sendMessageToParent: (msg: string) => void;
-  sendMessageToChild: (msg: string) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  receivedMessage: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setReceivedMessage: React.Dispatch<React.SetStateAction<any>>;
+  clearReceivedMessage: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sendMessageToParent: (msg: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sendMessageToChild: (msg: any) => void;
 };
 
 const IframeContext = createContext<IframeContextValue>(
@@ -24,7 +29,9 @@ type IframeProviderProps = {
 };
 
 export const IframeProvider = ({ children }: IframeProviderProps) => {
-  const [receivedMessage, setReceivedMessage] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [receivedMessage, setReceivedMessage] = useState<any>();
+  const clearReceivedMessage = () => setReceivedMessage(undefined);
 
   useEffect(() => {
     const handler = (ev: MessageEvent<{ type: string; message: string }>) => {
@@ -42,7 +49,8 @@ export const IframeProvider = ({ children }: IframeProviderProps) => {
     return () => window.removeEventListener('message', handler);
   }, []);
 
-  const sendMessageToParent = (msg: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sendMessageToParent = (msg: any) => {
     window.parent.postMessage(
       {
         type: 'msg',
@@ -51,7 +59,8 @@ export const IframeProvider = ({ children }: IframeProviderProps) => {
       '*',
     );
   };
-  const sendMessageToChild = (msg: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sendMessageToChild = (msg: any) => {
     const iframe = document.getElementById('iframe-child') as HTMLIFrameElement;
     iframe?.contentWindow?.postMessage(
       {
@@ -67,6 +76,7 @@ export const IframeProvider = ({ children }: IframeProviderProps) => {
       value={{
         receivedMessage,
         setReceivedMessage,
+        clearReceivedMessage,
         sendMessageToParent,
         sendMessageToChild,
       }}
