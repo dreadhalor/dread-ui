@@ -12,12 +12,15 @@ import {
   collectionGroup,
   where,
   Firestore,
+  getDoc,
 } from 'firebase/firestore';
 import {
   BaseAchievement,
   BaseAchievementData,
   UserAchievementData,
   UserAchievement,
+  UserPreferencesData,
+  UserPreferences,
 } from '@dread-ui/types';
 import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';
 import { useEffect, useState } from 'react';
@@ -144,6 +147,58 @@ export const useDB = () => {
     );
   };
 
+  // given a partial UserPreferences object, save it to the database
+  const saveUserPreferences = async (
+    uid: string,
+    preferences: Partial<UserPreferencesData>,
+  ): Promise<void> => {
+    if (!db) throw new Error('Firestore not initialized');
+    await setDoc(doc(db, `users/${uid}`), { preferences });
+  };
+  const deleteUserPreferences = async (uid: string): Promise<void> => {
+    if (!db) throw new Error('Firestore not initialized');
+    const userDoc = await getDoc(doc(db, `users/${uid}`));
+    if (userDoc.exists()) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { preferences, ...userData } = userDoc.data();
+      // if there are no other fields, delete the user doc
+      if (!userData || Object.keys(userData).length === 0)
+        await deleteDoc(doc(db, `users/${uid}`));
+      else await setDoc(doc(db, `users/${uid}`), userData);
+    }
+  };
+
+  const subscribeToUserPreferences = (
+    uid: string | null,
+    callback: (preferences: UserPreferencesData) => void,
+  ): (() => void) => {
+    if (!uid) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+    if (!db) throw new Error('Firestore not initialized');
+
+    const userDoc = doc(db, `users/${uid}`);
+
+    return onSnapshot(userDoc, (doc) => {
+      const userData = doc.data() as UserPreferences;
+      const { showNotifications = true, showBadges = true } =
+        userData?.preferences || {};
+      const sanitizedPreferences = { showNotifications, showBadges };
+      callback(sanitizedPreferences);
+    });
+  };
+
+  const fetchUserPreferences = async (
+    uid: string | null,
+  ): Promise<UserPreferencesData> => {
+    if (!uid || !db)
+      return Promise.resolve({ showNotifications: true, showBadges: true });
+    const userDoc = doc(db, `users/${uid}`);
+    const docSnap = await getDoc(userDoc);
+    const userData = docSnap.data() as UserPreferences;
+    const { showNotifications = true, showBadges = true } =
+      userData?.preferences || {};
+    return { showNotifications, showBadges };
+  };
+
   return {
     db,
     fetchUserAchievements,
@@ -151,5 +206,9 @@ export const useDB = () => {
     subscribeToGameAchievements,
     saveAchievement,
     deleteAchievement,
+    saveUserPreferences,
+    deleteUserPreferences,
+    fetchUserPreferences,
+    subscribeToUserPreferences,
   };
 };

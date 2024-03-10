@@ -1,5 +1,4 @@
 import {
-  // collection,
   query,
   getDocs,
   QueryDocumentSnapshot,
@@ -17,7 +16,8 @@ import {
 import { useAuth, toast } from '@dread-ui/index';
 import { useDB } from '@dread-ui/hooks/use-db';
 import { useFullAchievements } from '@dread-ui/hooks/use-full-achievements';
-import { useMergeAccounts } from '@dread-ui/hooks/user-merge-accounts';
+import { useMergeAccounts } from '@dread-ui/hooks/use-merge-accounts';
+import { useUserPreferences } from '@dread-ui/hooks/use-user-preferences';
 
 const convertDBGameAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
   const data = doc.data() as BaseAchievementData;
@@ -56,8 +56,8 @@ export const AchievementsProvider = ({ children }: Props) => {
 
   const { uid } = useAuth();
   const { db, saveAchievement: _saveAchievement, deleteAchievement } = useDB();
-  // const { userAchievements } = useAchievementsData(uid);
   const { achievements } = useFullAchievements(uid);
+  const { userPreferences } = useUserPreferences(uid);
   useMergeAccounts();
 
   const saveAchievement = async (achievement: Achievement) => {
@@ -89,11 +89,10 @@ export const AchievementsProvider = ({ children }: Props) => {
     if (state === 'unlocked' && achievement.state === 'locked') {
       achievement.state = 'newly_unlocked';
       achievement.unlockedAt = Timestamp.now();
-      // if (userPreferences.showNotifications)
-      //   openNotification(achievement.title, achievement.description);
-      toast(achievement.title, {
-        description: achievement.description,
-      });
+      if (userPreferences.showNotifications)
+        toast(achievement.title, {
+          description: achievement.description,
+        });
     }
 
     state === 'unlocked'

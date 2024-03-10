@@ -7,12 +7,16 @@ import { useAuth } from '@dread-ui/providers/auth-provider';
 import { createAvatar } from '@dicebear/core';
 import { thumbs } from '@dicebear/collection';
 import { useAchievements } from '@dread-ui/providers/achievements-provider';
+import { useUserPreferences } from '@dread-ui/hooks/use-user-preferences';
 
 const UserMenuButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, ...props }, ref) => {
     const { isOpen } = useUserMenuContext();
     const { loading, uid, signedIn } = useAuth();
+    const { userPreferences } = useUserPreferences(uid);
     const { achievements } = useAchievements();
+
+    const showBadges = userPreferences.showBadges;
 
     const avatar = createAvatar(thumbs, {
       seed: uid ?? '',
@@ -38,7 +42,7 @@ const UserMenuButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className,
         )}
       >
-        {newlyUnlockedAchievements.length > 0 && (
+        {newlyUnlockedAchievements.length > 0 && showBadges && (
           <Badge
             variant='destructive'
             className='absolute -right-1 top-0 z-10 overflow-visible px-1 py-0'

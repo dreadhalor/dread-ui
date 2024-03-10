@@ -7,15 +7,26 @@ type MergeAccountsEventDetail = {
 };
 
 export function useMergeAccounts() {
-  const { fetchUserAchievements, saveAchievement, deleteAchievement } = useDB();
+  const {
+    fetchUserAchievements,
+    saveAchievement,
+    deleteAchievement,
+    fetchUserPreferences,
+    saveUserPreferences,
+    deleteUserPreferences,
+  } = useDB();
 
   useEffect(() => {
     const onMergeAccounts = async (localUid: string, remoteUid: string) => {
       const [localUserAchievements, remoteUserAchievements] = await Promise.all(
         [fetchUserAchievements(localUid), fetchUserAchievements(remoteUid)],
       );
+      const [localUserPreferences, remoteUserPreferences] = await Promise.all([
+        fetchUserPreferences(localUid),
+        fetchUserPreferences(remoteUid),
+      ]);
 
-      const mergedPromises = localUserAchievements.map(
+      const mergedAchievementPromises = localUserAchievements.map(
         async (localUserAchievement) => {
           const remoteUserAchievement = remoteUserAchievements.find(
             (remoteUserAchievement) =>
@@ -35,7 +46,22 @@ export function useMergeAccounts() {
         },
       );
 
-      await Promise.all(mergedPromises);
+      // if either user has notifications or badges turned off, turn them off for the merged account
+      const hideNotifications =
+        !localUserPreferences.showNotifications ||
+        !remoteUserPreferences.showNotifications;
+      const hideBadges =
+        !localUserPreferences.showBadges || !remoteUserPreferences.showBadges;
+      const mergedUserPreferences = {
+        showNotifications: !hideNotifications,
+        showBadges: !hideBadges,
+      };
+
+      await Promise.all([
+        ...mergedAchievementPromises,
+        saveUserPreferences(remoteUid, mergedUserPreferences),
+        deleteUserPreferences(localUid),
+      ]);
     };
 
     const handleMergeAccounts = (
@@ -55,5 +81,12 @@ export function useMergeAccounts() {
         'mergeAccounts',
         handleMergeAccounts as EventListener,
       );
-  }, [fetchUserAchievements, saveAchievement, deleteAchievement]);
+  }, [
+    fetchUserAchievements,
+    saveAchievement,
+    deleteAchievement,
+    fetchUserPreferences,
+    saveUserPreferences,
+    deleteUserPreferences,
+  ]);
 }
