@@ -6,12 +6,19 @@ import MapBorder from './map-border';
 import backgroundImage from '@dread-ui/assets/kid-icarus-background.png';
 
 const AchievementsGrid = () => {
-  const { achievements } = useAchievements();
+  const { achievements, saveAchievement } = useAchievements();
   const [selectedAchievement, setSelectedAchievement] =
     useState<Achievement | null>(null);
 
   const selectAchievement = (achievement: Achievement | null) => {
-    setSelectedAchievement(achievement);
+    setSelectedAchievement((prev) => {
+      if (prev === null) return achievement;
+      if (prev.state === 'newly_unlocked') {
+        prev.state = 'unlocked';
+        saveAchievement(prev);
+      }
+      return achievement;
+    });
   };
 
   return (

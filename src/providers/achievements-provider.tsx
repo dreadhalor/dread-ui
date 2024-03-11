@@ -33,6 +33,7 @@ export interface AchievementsContextValue {
   achievements: Achievement[];
   toggleAchievement: (achievement: Achievement) => Promise<void>;
   unlockAchievementById: (id: string, gameId?: string) => Promise<void>;
+  saveAchievement: (achievement: Achievement) => Promise<void>;
   isUnlockable: (achievementId: string, gameId: string) => boolean;
 }
 
@@ -177,6 +178,7 @@ export const AchievementsProvider = ({ children }: Props) => {
         achievements,
         toggleAchievement,
         unlockAchievementById,
+        saveAchievement,
         isUnlockable,
       }}
     >

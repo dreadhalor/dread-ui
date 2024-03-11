@@ -86,7 +86,7 @@ const UserMenu = ({
           <DropdownMenuTrigger asChild>
             <UserMenuButton className={className} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent align='end'>
             {children}
             {!skipAchievements && (
               <>

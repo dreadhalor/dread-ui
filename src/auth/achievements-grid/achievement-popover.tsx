@@ -2,9 +2,11 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
+  useAchievements,
   useIframe,
 } from '@dread-ui/index';
 import { Achievement } from '@dread-ui/types';
+import { hasUnlockedNeighbors } from './achievement-square-utils';
 
 type AchievementPopoverProps = {
   achievement: Achievement;
@@ -19,7 +21,11 @@ const AchievementPopover = ({
   selectedAchievement,
 }: AchievementPopoverProps) => {
   const { unlockedAt, state } = achievement;
+  const { achievements } = useAchievements();
   const { sendMessageToParent } = useIframe();
+  const isUnlocked = state === 'unlocked' || state === 'newly_unlocked';
+  const showDescription =
+    isUnlocked || hasUnlockedNeighbors(achievement, achievements);
 
   return (
     <Popover
@@ -67,7 +73,9 @@ const AchievementPopover = ({
           <span className='text-2xl font-bold text-black'>
             {achievement.unlockedAt ? achievement.title : '???'}
           </span>
-          <span className='text-black'>{achievement.description}</span>
+          <span className='text-black'>
+            {showDescription ? achievement.description : '???'}
+          </span>
         </div>
       </PopoverContent>
     </Popover>
