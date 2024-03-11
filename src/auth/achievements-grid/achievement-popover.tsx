@@ -1,4 +1,9 @@
-import { Popover, PopoverContent, PopoverTrigger } from '@dread-ui/index';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  useIframe,
+} from '@dread-ui/index';
 import { Achievement } from '@dread-ui/types';
 
 type AchievementPopoverProps = {
@@ -13,6 +18,9 @@ const AchievementPopover = ({
   selectAchievement,
   selectedAchievement,
 }: AchievementPopoverProps) => {
+  const { unlockedAt, state } = achievement;
+  const { sendMessageToParent } = useIframe();
+
   return (
     <Popover
       onOpenChange={(open) => {
@@ -26,12 +34,40 @@ const AchievementPopover = ({
         align='center'
         side='top'
         sideOffset={10}
-        className='max-w-[300px]'
+        className='w-fit max-w-[350px]'
       >
-        <div>
-          <div>{achievement.gameId}</div>
-          <div>{achievement.title}</div>
-          <div>{achievement.description}</div>
+        <div className='flex flex-col gap-1'>
+          {unlockedAt && (
+            <div className='flex items-center gap-[8px]'>
+              <span className='text-sm text-gray-400'>
+                {unlockedAt.toDate().toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                } as Intl.DateTimeFormatOptions)}
+              </span>
+              {state === 'newly_unlocked' && (
+                <div className='rounded-full bg-[#00bfff] px-[6px] py-[1px] text-xs text-white'>
+                  New!
+                </div>
+              )}
+            </div>
+          )}
+          <div
+            className='w-fit cursor-pointer hover:underline'
+            onClick={() => {
+              sendMessageToParent({
+                type: 'scroll-to-app',
+                link: `/${achievement.gameId}`,
+              });
+            }}
+          >
+            {achievement.gameId}
+          </div>
+          <span className='text-2xl font-bold text-black'>
+            {achievement.unlockedAt ? achievement.title : '???'}
+          </span>
+          <span className='text-black'>{achievement.description}</span>
         </div>
       </PopoverContent>
     </Popover>

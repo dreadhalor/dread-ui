@@ -6,6 +6,17 @@ import { DreadUiProvider } from '@dread-ui/index';
 const meta: Meta<typeof AchievementsGrid> = {
   component: AchievementsGrid,
   title: 'Firebase/Achievements Grid',
+  parameters: {
+    backgrounds: {
+      default: 'fallcrate-dark',
+      values: [
+        {
+          name: 'fallcrate-dark',
+          value: 'rgb(37,44,59)',
+        },
+      ],
+    },
+  },
   decorators: [
     (Story) => (
       <DreadUiProvider>
@@ -18,4 +29,10 @@ const meta: Meta<typeof AchievementsGrid> = {
 export default meta;
 type Story = StoryObj<typeof AchievementsGrid>;
 
-export const Demo: Story = {};
+export const Demo: Story = {
+  render: () => (
+    <div className='mx-auto max-h-[500px] max-w-[500px]'>
+      <AchievementsGrid />
+    </div>
+  ),
+};

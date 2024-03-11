@@ -15,7 +15,7 @@ const AchievementsGrid = () => {
   };
 
   return (
-    <div className='bg-primary flex overflow-auto'>
+    <div className='flex h-full w-full overflow-auto'>
       <MapBorder>
         <div
           className='grid h-full w-full shrink-0 grid-cols-10 grid-rows-10 bg-cover'

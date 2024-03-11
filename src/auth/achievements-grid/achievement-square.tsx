@@ -62,7 +62,7 @@ const AchievementSquare = ({
         onDoubleClick={() => toggleAchievement(achievement)}
       >
         {newlyUnlocked && (
-          <FaExclamationCircle className='absolute right-1 top-1 text-yellow-400' />
+          <FaExclamationCircle className='absolute right-1 top-1 h-[14px] w-[14px] text-[#ffd700]' />
         )}
         <div
           className={`flex ${!is_selected ? 'transition-all' : ''}`}
