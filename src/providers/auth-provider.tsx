@@ -64,7 +64,8 @@ export const AuthProvider = ({ children }: Props) => {
     const provider = new GoogleAuthProvider();
     if (!auth) return null;
     try {
-      const result = await signInWithPopup(auth, provider);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result = await signInWithPopup(auth as any, provider);
       if (result) {
         // RUN THE FUNCTION TO LINK THE LOCAL ACCOUNT TO THE FIREBASE ACCOUNT
         // THEN WIPE THE LOCAL ACCOUNT
@@ -89,7 +90,8 @@ export const AuthProvider = ({ children }: Props) => {
   const handleLogout = async () => {
     if (!auth) return false;
     try {
-      await signOut(auth);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await signOut(auth as any);
       return true;
     } catch (error) {
       console.error('Error signing out:', error);
