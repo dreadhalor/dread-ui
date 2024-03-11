@@ -3,6 +3,11 @@ import { Achievement } from '@dread-ui/types';
 import { cn } from '@repo/utils';
 import { AchievementPopover } from './achievement-popover';
 import { FaExclamationCircle } from 'react-icons/fa';
+import {
+  checkNeighborState,
+  constructBorders,
+  getNeighbors,
+} from './achievement-square-utils';
 
 type AchievementSquareProps = {
   achievement: Achievement;
@@ -14,7 +19,37 @@ const AchievementSquare = ({
   selectedAchievement,
   selectAchievement,
 }: AchievementSquareProps) => {
-  const { toggleAchievement } = useAchievements();
+  const { toggleAchievement, achievements } = useAchievements();
+
+  const is_locked = achievement.state === 'locked';
+  const is_selected = selectedAchievement?.id === achievement.id;
+  const newlyUnlocked = achievement.state === 'newly_unlocked';
+  const neighbors = getNeighbors(achievement.id, achievements);
+  const has_unlocked_neighbors = checkNeighborState(['unlocked'], neighbors);
+
+  const innerSquareStyle = constructBorders(
+    neighbors,
+    is_selected,
+    is_locked,
+    has_unlocked_neighbors,
+  );
+
+  const bg_colors = {
+    locked: 'rgb(44,3,21)',
+    unlocked: '',
+    locked_with_unlocked_neighbors: 'rgba(84,43,61,0.97)',
+  };
+
+  const getBackgroundColor = () => {
+    if (!is_locked) return bg_colors.unlocked;
+    if (has_unlocked_neighbors) return bg_colors.locked_with_unlocked_neighbors;
+    return bg_colors.locked;
+  };
+
+  const style = {
+    backgroundColor: getBackgroundColor(),
+  };
+
   return (
     <AchievementPopover
       achievement={achievement}
@@ -22,17 +57,17 @@ const AchievementSquare = ({
       selectedAchievement={selectedAchievement}
     >
       <div
-        className={cn(
-          'relative h-[30px] w-[30px] overflow-visible border',
-          selectedAchievement?.id === achievement.id && 'border-red-600',
-          achievement.state === 'locked' && 'bg-border',
-        )}
+        className={cn('relative overflow-visible')}
         onClick={() => selectAchievement(achievement)}
         onDoubleClick={() => toggleAchievement(achievement)}
       >
-        {achievement.state === 'newly_unlocked' && (
-          <FaExclamationCircle className='absolute right-0 top-0 text-yellow-300' />
+        {newlyUnlocked && (
+          <FaExclamationCircle className='absolute right-1 top-1 text-yellow-400' />
         )}
+        <div
+          className={`flex ${!is_selected ? 'transition-all' : ''}`}
+          style={{ ...innerSquareStyle, ...style }}
+        ></div>
       </div>
     </AchievementPopover>
   );

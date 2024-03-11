@@ -29,6 +29,7 @@ const AchievementPopover = ({
         className='max-w-[300px]'
       >
         <div>
+          <div>{achievement.gameId}</div>
           <div>{achievement.title}</div>
           <div>{achievement.description}</div>
         </div>
