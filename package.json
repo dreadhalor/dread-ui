@@ -72,7 +72,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-storybook": "^0.6.15",
-    "firebase": "^10.8.0",
+    "firebase": "^10.8.1",
     "storybook": "^7.6.12",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
