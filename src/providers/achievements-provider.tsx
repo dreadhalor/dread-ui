@@ -24,6 +24,7 @@ import { useDB } from '@dread-ui/hooks/use-db';
 import { useFullAchievements } from '@dread-ui/hooks/use-full-achievements';
 import { useMergeAccounts } from '@dread-ui/hooks/use-merge-accounts';
 import { useUserPreferences } from '@dread-ui/hooks/use-user-preferences';
+import { GiLaurelCrown } from 'react-icons/gi';
 
 const convertDBGameAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
   const data = doc.data() as BaseAchievementData;
@@ -99,6 +100,17 @@ export const AchievementsProvider = ({ children }: Props) => {
       if (userPreferences.showNotifications)
         toast(achievement.title, {
           description: achievement.description,
+          icon: <GiLaurelCrown className='h-12 w-12' />,
+          action: {
+            label: 'Open',
+            onClick: () => {
+              console.log('Open Achievements');
+            },
+          },
+          classNames: {
+            description: 'ml-8',
+            title: 'ml-8',
+          },
         });
     }
 

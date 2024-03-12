@@ -7,7 +7,7 @@ type Props = {
 };
 
 const MapBorder = ({ children }: Props) => {
-  const [borderThickness, setBorderThickness] = useState(0);
+  const [borderThickness, setBorderThickness] = useState(38);
   const wrapperStyle = {
     display: 'grid',
     gridTemplateRows: `${borderThickness}px auto ${borderThickness}px`,
