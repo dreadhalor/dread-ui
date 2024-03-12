@@ -28,6 +28,7 @@ export * from './ui/tooltip/tooltip';
 export * from './misc/iframe-provider';
 
 export * from './auth/user-menu';
+export { AchievementsDialog } from './auth/achievements-grid/achievements-dialog';
 export * from './providers/auth-provider';
 export * from './providers/achievements-provider';
 export * from './providers/dread-ui-provider';

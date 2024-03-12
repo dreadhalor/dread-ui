@@ -19,7 +19,7 @@ import {
   BaseAchievementData,
   UserAchievement,
 } from '@dread-ui/types';
-import { useAuth, toast } from '@dread-ui/index';
+import { useAuth, toast, AchievementsDialog, Toaster } from '@dread-ui/index';
 import { useDB } from '@dread-ui/hooks/use-db';
 import { useFullAchievements } from '@dread-ui/hooks/use-full-achievements';
 import { useMergeAccounts } from '@dread-ui/hooks/use-merge-accounts';
@@ -42,6 +42,8 @@ export interface AchievementsContextValue {
   unlockAchievementById: (id: string, gameId?: string) => Promise<void>;
   saveAchievement: (achievement: Achievement) => Promise<void>;
   isUnlockable: (achievementId: string, gameId: string) => boolean;
+  showAchievementDialog: boolean;
+  setShowAchievementDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AchievementsContext = createContext({} as AchievementsContextValue);
@@ -61,6 +63,7 @@ interface Props {
 }
 export const AchievementsProvider = ({ children }: Props) => {
   const [allAchievements, setAllAchievements] = useState<BaseAchievement[]>([]);
+  const [showAchievementDialog, setShowAchievementDialog] = useState(false);
 
   const { uid, signedIn } = useAuth();
   const { db, saveAchievement: _saveAchievement, deleteAchievement } = useDB();
@@ -97,21 +100,20 @@ export const AchievementsProvider = ({ children }: Props) => {
     if (state === 'unlocked' && achievement.state === 'locked') {
       achievement.state = 'newly_unlocked';
       achievement.unlockedAt = Timestamp.now();
-      if (userPreferences.showNotifications)
+      if (userPreferences.showNotifications) {
         toast(achievement.title, {
           description: achievement.description,
           icon: <GiLaurelCrown className='h-12 w-12' />,
           action: {
             label: 'Open',
-            onClick: () => {
-              console.log('Open Achievements');
-            },
+            onClick: () => setShowAchievementDialog(true),
           },
           classNames: {
             description: 'ml-8',
             title: 'ml-8',
           },
         });
+      }
     }
 
     state === 'unlocked'
@@ -201,9 +203,13 @@ export const AchievementsProvider = ({ children }: Props) => {
         unlockAchievementById,
         saveAchievement,
         isUnlockable,
+        showAchievementDialog,
+        setShowAchievementDialog,
       }}
     >
       {children}
+      <AchievementsDialog />
+      <Toaster closeButton />
     </AchievementsContext.Provider>
   );
 };

@@ -1,9 +1,5 @@
 import {
   Badge,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -11,7 +7,6 @@ import {
   useAchievements,
 } from '@dread-ui/index';
 import React, { createContext, useContext, useState } from 'react';
-import { AchievementsGrid } from '../achievements-grid/achievements-grid';
 import { UserMenuButton } from './user-menu-button';
 import { useAuth } from '@dread-ui/providers/auth-provider';
 import { BsBell, BsBellSlashFill, BsGoogle } from 'react-icons/bs';
@@ -72,7 +67,7 @@ const UserMenu = ({
   const [isOpen, setIsOpen] = useState(false);
   const { signInWithGoogle, signedIn, handleLogout, uid } = useAuth();
   const { userPreferences, editUserPreferences } = useUserPreferences(uid);
-  const { achievements } = useAchievements();
+  const { achievements, setShowAchievementDialog } = useAchievements();
 
   const newlyUnlockedAchievements = achievements.filter(
     (achievement) => achievement.state === 'newly_unlocked',
@@ -81,93 +76,79 @@ const UserMenu = ({
 
   return (
     <UserMenuContext.Provider value={{ isOpen, setIsOpen }}>
-      <Dialog>
-        <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-          <DropdownMenuTrigger asChild>
-            <UserMenuButton className={className} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            {children}
-            {!skipAchievements && (
-              <>
-                <DialogTrigger asChild>
-                  <DropdownMenuItem>
-                    <span className='flex items-center gap-[16px]'>
-                      <SlTrophy />
-                      <span className='flex items-center gap-1'>
-                        Achievements
-                        {newlyUnlockedAchievements.length > 0 && showBadges && (
-                          <Badge variant='destructive' className='px-1.5 py-0'>
-                            {newlyUnlockedAchievements.length}
-                          </Badge>
-                        )}
-                      </span>
-                    </span>
-                  </DropdownMenuItem>
-                </DialogTrigger>
-                <UserMenuOption
-                  onSelect={(e) => {
-                    if (e) e.preventDefault();
-                    editUserPreferences({
-                      showNotifications: !userPreferences.showNotifications,
-                    });
-                  }}
-                >
-                  {userPreferences.showNotifications ? (
-                    <BsBell />
-                  ) : (
-                    <BsBellSlashFill />
-                  )}
-                  Toggle Notifications
-                </UserMenuOption>
-                <UserMenuOption
-                  onSelect={(e) => {
-                    if (e) e.preventDefault();
-                    editUserPreferences({
-                      showBadges: !userPreferences.showBadges,
-                    });
-                  }}
-                >
-                  {userPreferences.showBadges ? (
-                    <RiNotificationBadgeLine />
-                  ) : (
-                    <BadgesOffIcon className='h-[16px] w-[16px]' />
-                  )}
-                  Toggle Badges
-                </UserMenuOption>
-              </>
-            )}
-            {!signedIn && !skipLogin && (
-              <UserMenuOption onSelect={signInWithGoogle}>
-                <BsGoogle />
-                Sign In&nbsp;&nbsp;🎉
-              </UserMenuOption>
-            )}
-            {signedIn && (
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+        <DropdownMenuTrigger asChild>
+          <UserMenuButton className={className} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align='end'>
+          {children}
+          {!skipAchievements && (
+            <>
+              <DropdownMenuItem onSelect={() => setShowAchievementDialog(true)}>
+                <span className='flex items-center gap-[16px]'>
+                  <SlTrophy />
+                  <span className='flex items-center gap-1'>
+                    Achievements
+                    {newlyUnlockedAchievements.length > 0 && showBadges && (
+                      <Badge variant='destructive' className='px-1.5 py-0'>
+                        {newlyUnlockedAchievements.length}
+                      </Badge>
+                    )}
+                  </span>
+                </span>
+              </DropdownMenuItem>
               <UserMenuOption
-                onSelect={() => {
-                  handleLogout().then((loggedOut) => {
-                    if (loggedOut && onLogout) onLogout();
+                onSelect={(e) => {
+                  if (e) e.preventDefault();
+                  editUserPreferences({
+                    showNotifications: !userPreferences.showNotifications,
                   });
                 }}
               >
-                <FiLogIn />
-                Logout
+                {userPreferences.showNotifications ? (
+                  <BsBell />
+                ) : (
+                  <BsBellSlashFill />
+                )}
+                Toggle Notifications
               </UserMenuOption>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <DialogContent
-          overlayClassName='bg-black/60'
-          className='border-0 bg-[rgb(37,44,59)] outline-none'
-          noCloseButton
-        >
-          <DialogHeader className='mx-auto text-2xl text-white'>
-            Achievements!
-          </DialogHeader>
-          <AchievementsGrid />
-        </DialogContent>
-      </Dialog>
+              <UserMenuOption
+                onSelect={(e) => {
+                  if (e) e.preventDefault();
+                  editUserPreferences({
+                    showBadges: !userPreferences.showBadges,
+                  });
+                }}
+              >
+                {userPreferences.showBadges ? (
+                  <RiNotificationBadgeLine />
+                ) : (
+                  <BadgesOffIcon className='h-[16px] w-[16px]' />
+                )}
+                Toggle Badges
+              </UserMenuOption>
+            </>
+          )}
+          {!signedIn && !skipLogin && (
+            <UserMenuOption onSelect={signInWithGoogle}>
+              <BsGoogle />
+              Sign In&nbsp;&nbsp;🎉
+            </UserMenuOption>
+          )}
+          {signedIn && (
+            <UserMenuOption
+              onSelect={() => {
+                handleLogout().then((loggedOut) => {
+                  if (loggedOut && onLogout) onLogout();
+                });
+              }}
+            >
+              <FiLogIn />
+              Logout
+            </UserMenuOption>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </UserMenuContext.Provider>
   );
 };
