@@ -172,4 +172,4 @@ const UserMenu = ({
   );
 };
 
-export { UserMenu };
+export { UserMenu, UserMenuOption };
