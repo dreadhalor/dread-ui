@@ -20,6 +20,7 @@ import {
   UserPreferences,
 } from '@dread-ui/types';
 import { db } from '@repo/utils';
+import { useCallback } from 'react';
 
 const convertDBGameAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
   const data = doc.data() as BaseAchievementData;
@@ -40,37 +41,43 @@ const convertDBUserAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
   };
 };
 
+// these don't necessarily need to be memoized, but this way we can add them to
+// the dependency array in use-achievements-data.tsx
 export const useDB = () => {
-  const subscribeToGameAchievements = (
-    callback: (achievements: BaseAchievement[]) => void,
-  ) => {
-    if (!db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
-    const q = query(collectionGroup(db, 'achievements'));
-    return onSnapshot(q, (querySnapshot) => {
-      const achievements = querySnapshot.docs.map((doc) =>
-        convertDBGameAchievement(doc),
-      );
-      callback(achievements);
-    });
-  };
+  const subscribeToGameAchievements = useCallback(
+    (callback: (achievements: BaseAchievement[]) => void) => {
+      if (!db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+      const q = query(collectionGroup(db, 'achievements'));
+      return onSnapshot(q, (querySnapshot) => {
+        const achievements = querySnapshot.docs.map((doc) =>
+          convertDBGameAchievement(doc),
+        );
+        callback(achievements);
+      });
+    },
+    [],
+  );
 
-  const subscribeToUserAchievements = (
-    uid: string | null,
-    callback: (achievements: UserAchievement[]) => void,
-  ): (() => void) => {
-    if (!uid || !db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+  const subscribeToUserAchievements = useCallback(
+    (
+      uid: string | null,
+      callback: (achievements: UserAchievement[]) => void,
+    ): (() => void) => {
+      if (!uid || !db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
 
-    const q = query(
-      collectionGroup(db, 'userAchievements'),
-      where('uid', '==', uid),
-    );
-    return onSnapshot(q, (querySnapshot) => {
-      const achievements = querySnapshot.docs.map((doc) =>
-        convertDBUserAchievement(doc),
+      const q = query(
+        collectionGroup(db, 'userAchievements'),
+        where('uid', '==', uid),
       );
-      callback(achievements);
-    });
-  };
+      return onSnapshot(q, (querySnapshot) => {
+        const achievements = querySnapshot.docs.map((doc) =>
+          convertDBUserAchievement(doc),
+        );
+        callback(achievements);
+      });
+    },
+    [],
+  );
 
   const fetchUserAchievements = async (
     uid: string | null,

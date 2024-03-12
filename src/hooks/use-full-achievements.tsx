@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { BaseAchievement, Achievement, UserAchievement } from '@dread-ui/types';
 import { useAchievementsData } from './use-achievements-data';
+import { useAuth } from '..';
 
-const useFullAchievements = (uid: string | null) => {
+const useFullAchievements = () => {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
 
-  const { gameAchievements, userAchievements } = useAchievementsData(uid);
+  const { uid } = useAuth();
+  const { gameAchievements, userAchievements, loading } = useAchievementsData();
 
   useEffect(() => {
     const combineSingleAchievement = (
@@ -44,7 +46,7 @@ const useFullAchievements = (uid: string | null) => {
     setAchievements(combineAchievements(gameAchievements, userAchievements));
   }, [gameAchievements, userAchievements, uid]);
 
-  return { achievements };
+  return { achievements, loading };
 };
 
 export { useFullAchievements };

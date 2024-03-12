@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useDB } from '@dread-ui/hooks/use-db';
 import { BaseAchievement, UserAchievement } from '@dread-ui/types';
+import { useAuth } from '..';
 
-export function useAchievementsData(uid: string | null) {
+export function useAchievementsData() {
+  const { uid } = useAuth();
   const { subscribeToUserAchievements, subscribeToGameAchievements } = useDB();
   const [gameAchievements, setGameAchievements] = useState<BaseAchievement[]>(
     [],
@@ -10,12 +12,21 @@ export function useAchievementsData(uid: string | null) {
   const [userAchievements, setUserAchievements] = useState<UserAchievement[]>(
     [],
   );
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setGameAchievements([]);
+    setUserAchievements([]);
+    setLoading(true);
+  }, [uid]);
 
   useEffect(() => {
     const gameUnsubscribe = subscribeToGameAchievements(setGameAchievements);
-    const userUnsubscribe = subscribeToUserAchievements(
-      uid,
-      setUserAchievements,
+    const userUnsubscribe = subscribeToUserAchievements(uid, (achievements) =>
+      setUserAchievements(() => {
+        setLoading(false);
+        return achievements;
+      }),
     );
 
     return () => {
@@ -23,7 +34,7 @@ export function useAchievementsData(uid: string | null) {
       userUnsubscribe();
     };
     // when I add the subscribe functions to the dependency array, the app crashes
-  }, [uid]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [uid, subscribeToGameAchievements, subscribeToUserAchievements]);
 
-  return { gameAchievements, userAchievements };
+  return { gameAchievements, userAchievements, loading };
 }

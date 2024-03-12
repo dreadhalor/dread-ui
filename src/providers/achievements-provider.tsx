@@ -6,7 +6,13 @@ import {
   collectionGroup,
   Timestamp,
 } from 'firebase/firestore';
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import {
   Achievement,
   BaseAchievement,
@@ -55,9 +61,9 @@ interface Props {
 export const AchievementsProvider = ({ children }: Props) => {
   const [allAchievements, setAllAchievements] = useState<BaseAchievement[]>([]);
 
-  const { uid } = useAuth();
+  const { uid, signedIn } = useAuth();
   const { db, saveAchievement: _saveAchievement, deleteAchievement } = useDB();
-  const { achievements } = useFullAchievements(uid);
+  const { achievements, loading } = useFullAchievements();
   const { userPreferences } = useUserPreferences(uid);
   useMergeAccounts();
 
@@ -132,17 +138,20 @@ export const AchievementsProvider = ({ children }: Props) => {
       : await lockAchievement(achievement);
   };
 
-  const isUnlockable = (achievementId: string, gameId: string) => {
-    return (
-      achievements.find(
-        (achievement) =>
-          achievement.uid === uid &&
-          achievement.gameId === gameId &&
-          achievement.id === achievementId &&
-          achievement.state === 'locked',
-      ) !== undefined
-    );
-  };
+  const isUnlockable = useCallback(
+    (achievementId: string, gameId: string) => {
+      return (
+        achievements.find(
+          (achievement) =>
+            achievement.uid === uid &&
+            achievement.gameId === gameId &&
+            achievement.id === achievementId &&
+            achievement.state === 'locked',
+        ) !== undefined
+      );
+    },
+    [achievements, uid],
+  );
 
   useEffect(() => {
     const fetchAllGameAchievements = async (): Promise<BaseAchievement[]> => {
@@ -164,12 +173,12 @@ export const AchievementsProvider = ({ children }: Props) => {
     });
   }, [setAllAchievements, db]);
 
-  // const fetchGameAchievements = async (gameId: string): Promise<any> => {
-  //   if (!db) return [];
-  //   const q = query(collection(db, `games/${gameId}/achievements`));
-  //   const querySnapshot = await getDocs(q);
-  //   return querySnapshot.docs.map((doc) => convertDBGameAchievement(doc));
-  // };
+  useEffect(() => {
+    if (signedIn && !loading) {
+      if (isUnlockable('login', 'home')) unlockAchievementById('login', 'home');
+    }
+    // I know unlockAchievementById should be here but I don't want to throw a bunch of chained functions into useCallbacks
+  }, [signedIn, loading, isUnlockable]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <AchievementsContext.Provider
