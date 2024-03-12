@@ -8,6 +8,7 @@ interface GameAchievements {
 interface BaseAchievementData {
   title: string;
   description: string;
+  index: number;
 }
 interface BaseAchievement extends BaseAchievementData {
   id: string;

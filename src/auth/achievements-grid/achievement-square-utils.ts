@@ -17,7 +17,13 @@ export const getAchievementGridIndex = (
   achievement_id: string,
   achievements: Achievement[],
 ): number => {
-  return achievements.findIndex((a) => a.id === achievement_id);
+  return achievements.find((a) => a.id === achievement_id)?.index ?? -1;
+};
+const getAchievementFromGridIndex = (
+  index: number,
+  achievements: Achievement[],
+): Achievement | null => {
+  return achievements.find((a) => a.index === index) ?? null;
 };
 
 export const getNeighbors = (
@@ -38,10 +44,26 @@ export const getNeighbors = (
 
   const row = Math.floor(achievement_index / 10);
   const column = achievement_index % 10;
-  const top = row > 0 ? achievements[achievement_index - 10]! : null;
-  const bottom = row < 9 ? achievements[achievement_index + 10]! : null;
-  const left = column > 0 ? achievements[achievement_index - 1]! : null;
-  const right = column < 9 ? achievements[achievement_index + 1]! : null;
+  // const top = row > 0 ? achievements[achievement_index - 10]! : null;
+  const top =
+    row > 0
+      ? getAchievementFromGridIndex(achievement_index - 10, achievements)
+      : null;
+  // const bottom = row < 9 ? achievements[achievement_index + 10]! : null;
+  const bottom =
+    row < 9
+      ? getAchievementFromGridIndex(achievement_index + 10, achievements)
+      : null;
+  // const left = column > 0 ? achievements[achievement_index - 1]! : null;
+  const left =
+    column > 0
+      ? getAchievementFromGridIndex(achievement_index - 1, achievements)
+      : null;
+  // const right = column < 9 ? achievements[achievement_index + 1]! : null;
+  const right =
+    column < 9
+      ? getAchievementFromGridIndex(achievement_index + 1, achievements)
+      : null;
 
   return { top, bottom, left, right };
 };

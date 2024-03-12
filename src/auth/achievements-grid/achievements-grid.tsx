@@ -1,12 +1,15 @@
 import { useAchievements } from '@dread-ui/providers/achievements-provider';
 import { AchievementSquare } from './achievement-square';
 import { Achievement } from '@dread-ui/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MapBorder from './map-border';
 import backgroundImage from '@dread-ui/assets/kid-icarus-background.png';
 
 const AchievementsGrid = () => {
   const { achievements, saveAchievement } = useAchievements();
+  const [sortedAchievements, setSortedAchievements] = useState<Achievement[]>(
+    [],
+  );
   const [selectedAchievement, setSelectedAchievement] =
     useState<Achievement | null>(null);
 
@@ -21,6 +24,11 @@ const AchievementsGrid = () => {
     });
   };
 
+  useEffect(() => {
+    const sorted = [...achievements].sort((a, b) => a.index - b.index);
+    setSortedAchievements(sorted);
+  }, [achievements]);
+
   return (
     <div className='flex h-full w-full overflow-auto'>
       <MapBorder>
@@ -30,7 +38,7 @@ const AchievementsGrid = () => {
             backgroundImage: `url(${backgroundImage})`,
           }}
         >
-          {achievements.map((achievement) => (
+          {sortedAchievements.map((achievement) => (
             <AchievementSquare
               key={achievement.id}
               achievement={achievement}
