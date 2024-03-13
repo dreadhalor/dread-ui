@@ -5,7 +5,7 @@ import { DreadUiProvider } from '@dread-ui/index';
 
 const meta: Meta<typeof AchievementsGrid> = {
   component: AchievementsGrid,
-  title: 'Firebase/Achievements Grid',
+  title: 'Auth/Achievements Grid',
   parameters: {
     backgrounds: {
       default: 'fallcrate-dark',

@@ -2,6 +2,7 @@ import {
   AchievementsProvider,
   AuthProvider,
   IframeProvider,
+  TooltipProvider,
 } from '@dread-ui/index';
 
 type Props = {
@@ -10,9 +11,11 @@ type Props = {
 const DreadUiProvider = ({ children }: Props) => {
   return (
     <IframeProvider>
-      <AuthProvider>
-        <AchievementsProvider>{children}</AchievementsProvider>
-      </AuthProvider>
+      <TooltipProvider>
+        <AuthProvider>
+          <AchievementsProvider>{children}</AchievementsProvider>
+        </AuthProvider>
+      </TooltipProvider>
     </IframeProvider>
   );
 };

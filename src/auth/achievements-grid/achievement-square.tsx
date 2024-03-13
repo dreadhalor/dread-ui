@@ -13,6 +13,9 @@ type AchievementSquareProps = {
   achievement: Achievement;
   selectedAchievement: Achievement | null;
   selectAchievement: (achievement: Achievement | null) => void;
+  moveSelectedAchievement: (
+    direction: 'up' | 'down' | 'left' | 'right',
+  ) => void;
 };
 const AchievementSquare = ({
   achievement,
@@ -58,8 +61,10 @@ const AchievementSquare = ({
     >
       <div
         className={cn('relative overflow-visible')}
-        onClick={() => selectAchievement(achievement)}
-        onDoubleClick={() => toggleAchievement(achievement)}
+        onDoubleClick={() => {
+          if (import.meta.env.DEV) toggleAchievement(achievement);
+        }}
+        onPointerDown={() => selectAchievement(achievement)}
       >
         {newlyUnlocked && (
           <FaExclamationCircle className='absolute right-1 top-1 h-[14px] w-[14px] text-[#ffd700]' />

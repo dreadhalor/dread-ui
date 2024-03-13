@@ -5,7 +5,7 @@ import { DreadUiProvider } from '@dread-ui/index';
 
 const meta: Meta<typeof UserMenu> = {
   component: UserMenu,
-  title: 'Firebase/User Menu',
+  title: 'Auth/User Menu',
   decorators: [
     (Story) => (
       <DreadUiProvider>

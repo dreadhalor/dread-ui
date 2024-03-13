@@ -19,21 +19,23 @@ const buttonVariants = cva(
           'bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
+        unstyled: 'rounded-none font-normal',
       },
       size: {
         default: 'h-9 px-4 py-2',
         sm: 'h-8 px-3 text-xs',
         lg: 'h-10 px-8',
         icon: 'h-9 w-9 p-0',
-        // default: "",
-        // sm: "text-[10px]",
-        // lg: "text-base",
-        // icon: "h-12 w-12 p-0",
       },
     },
     compoundVariants: [
       {
         variant: 'link',
+        size: ['default', 'sm', 'lg', 'icon'],
+        className: 'h-auto w-auto px-0 py-0',
+      },
+      {
+        variant: 'unstyled',
         size: ['default', 'sm', 'lg', 'icon'],
         className: 'h-auto w-auto px-0 py-0',
       },

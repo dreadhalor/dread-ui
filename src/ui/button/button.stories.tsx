@@ -33,6 +33,7 @@ export const Demo: Story = {
         'destructive',
         'ghost',
         'link',
+        'unstyled',
       ],
     },
     size: {
@@ -80,6 +81,9 @@ export const Variants: Story = {
       </Button>
       <Button {...args} variant='link'>
         Link
+      </Button>
+      <Button {...args} variant='unstyled'>
+        Unstyled
       </Button>
     </div>
   ),

@@ -1,7 +1,8 @@
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipTrigger,
   useAchievements,
   useIframe,
 } from '@dread-ui/index';
@@ -28,21 +29,28 @@ const AchievementPopover = ({
     isUnlocked || hasUnlockedNeighbors(achievement, achievements);
 
   return (
-    <Popover
-      onOpenChange={(open) => {
-        if (!open && selectedAchievement) {
-          selectAchievement(null);
-        }
+    <Tooltip
+      open={selectedAchievement?.id === achievement.id}
+      onOpenChange={() => {
+        // only allow closing programmatically
+        return true;
       }}
     >
-      <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
+      <TooltipContent
         align='center'
         side='top'
         sideOffset={10}
-        className='w-fit max-w-[350px]'
+        className='w-fit max-w-[300px] p-3'
+        onPointerDownOutside={() => {
+          if (selectedAchievement?.id === achievement.id) {
+            // because we select achievements with pointerDown, the new achievement is selected before this event
+            selectAchievement(null);
+          }
+        }}
       >
-        <div className='flex flex-col gap-1'>
+        <TooltipArrow fill='white' />
+        <div className='pointer-events-none flex flex-col gap-1'>
           {unlockedAt && (
             <div className='flex items-center gap-[8px]'>
               <span className='text-sm text-gray-400'>
@@ -60,7 +68,7 @@ const AchievementPopover = ({
             </div>
           )}
           <div
-            className='w-fit cursor-pointer hover:underline'
+            className='pointer-events-auto w-fit cursor-pointer hover:underline'
             onClick={() => {
               sendMessageToParent({
                 type: 'scroll-to-app',
@@ -70,15 +78,15 @@ const AchievementPopover = ({
           >
             {achievement.gameId}
           </div>
-          <span className='text-2xl font-bold text-black'>
+          <span className='text-xl font-bold text-black'>
             {achievement.unlockedAt ? achievement.title : '???'}
           </span>
-          <span className='text-black'>
+          <span className='text-sm text-black'>
             {showDescription ? achievement.description : '???'}
           </span>
         </div>
-      </PopoverContent>
-    </Popover>
+      </TooltipContent>
+    </Tooltip>
   );
 };
 
