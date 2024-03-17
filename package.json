@@ -11,6 +11,10 @@
     "./style.scss": {
       "require": "./src/index.scss",
       "default": "./src/index.scss"
+    },
+    "./built-style.css": {
+      "require": "./output.css",
+      "default": "./output.css"
     }
   },
   "scripts": {
