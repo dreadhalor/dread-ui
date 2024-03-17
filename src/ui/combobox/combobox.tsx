@@ -16,7 +16,6 @@ import {
   selectVariants,
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
   TruncatedText,
 } from '@dread-ui/index';
