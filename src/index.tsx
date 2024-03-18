@@ -13,6 +13,7 @@ export * from './ui/command/command';
 export * from './ui/date-picker/date-picker';
 export * from './ui/dialog/dialog';
 export * from './ui/dropdown-menu/dropdown-menu';
+export * from './ui/form/form';
 export * from './ui/input/input';
 export * from './ui/label/label';
 export * from './ui/popover/popover';

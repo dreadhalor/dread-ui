@@ -155,3 +155,8 @@
   width: var(--radix-dropdown-menu-trigger-width);
   max-height: var(--radix-dropdown-menu-content-available-height);
 }
+
+/* to make the sonner content fill the width of the toast */
+[data-sonner-toast] [data-content] {
+  @apply flex-1;
+}
