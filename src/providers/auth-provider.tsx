@@ -7,7 +7,7 @@ import {
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { auth } from '@repo/utils';
+import { auth } from '@repo/utils/firebase';
 
 export interface AuthContextValue {
   uid: string | null;

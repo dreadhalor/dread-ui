@@ -19,7 +19,7 @@ import {
   UserPreferencesData,
   UserPreferences,
 } from '@dread-ui/types';
-import { db } from '@repo/utils';
+import { db } from '@repo/utils/firebase';
 import { useCallback } from 'react';
 
 const convertDBGameAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
