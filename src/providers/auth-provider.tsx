@@ -22,6 +22,7 @@ export const AuthContext = createContext<AuthContextValue>(
   {} as AuthContextValue,
 );
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = (): AuthContextValue => useContext(AuthContext);
 
 interface Props {

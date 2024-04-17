@@ -48,6 +48,7 @@ export interface AchievementsContextValue {
 
 const AchievementsContext = createContext({} as AchievementsContextValue);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAchievements = (): AchievementsContextValue => {
   const context = useContext(AchievementsContext);
   if (!context) {

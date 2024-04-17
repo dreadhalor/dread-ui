@@ -62,7 +62,7 @@ const frameworks = [
     value: 'astro',
     label: 'Astro',
   },
-];
+] as const;
 
 const locations = [
   {
@@ -85,7 +85,7 @@ const locations = [
     value: 'st-petersburg',
     label: 'St. Petersburg',
   },
-];
+] as const;
 
 // A long list of any non-repeating values, for testing scrolling.
 const longList = Array.from({ length: 100 }, (_, i) => ({
@@ -94,7 +94,7 @@ const longList = Array.from({ length: 100 }, (_, i) => ({
 }));
 
 export const Demo: Story = {
-  render: (_) => (
+  render: () => (
     <Combobox>
       <ComboboxValue className='w-[200px]' placeholder='Select framework...' />
       <ComboboxContent>
@@ -114,6 +114,7 @@ export const Demo: Story = {
   ),
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LocationDemoComponent = ({ placeholder, values }: any) => {
   const [open, setOpen] = useState(false);
 
@@ -125,7 +126,7 @@ const LocationDemoComponent = ({ placeholder, values }: any) => {
         <ComboboxEmpty>No results found.</ComboboxEmpty>
         <ComboboxList>
           <ComboboxGroup>
-            {values.map((location) => (
+            {values.map((location: (typeof locations)[number]) => (
               <ComboboxItem key={location.value} value={location.value}>
                 {location.label}
               </ComboboxItem>
@@ -173,6 +174,7 @@ export const FooterDemo: StoryObj = {
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ControlledDemoComponent = ({ placeholder, values }: any) => {
   const [value, setValue] = useState<string[]>([]);
   return (
@@ -184,7 +186,7 @@ const ControlledDemoComponent = ({ placeholder, values }: any) => {
           <ComboboxEmpty>No results found.</ComboboxEmpty>
           <ComboboxList>
             <ComboboxGroup>
-              {values.map((framework) => (
+              {values.map((framework: (typeof frameworks)[number]) => (
                 <ComboboxItem key={framework.value} value={framework.value}>
                   {framework.label}
                 </ComboboxItem>
@@ -194,7 +196,7 @@ const ControlledDemoComponent = ({ placeholder, values }: any) => {
         </ComboboxContent>
       </Combobox>
       <p>External control:</p>
-      {values.map((_value) => (
+      {values.map((_value: (typeof frameworks)[number]) => (
         <div className='flex gap-1' key={_value.value}>
           <Checkbox
             id={_value.value}
@@ -222,7 +224,7 @@ export const Controlled: StoryObj = {
 };
 
 export const LongListDemo: Story = {
-  render: (_) => (
+  render: () => (
     <Combobox>
       <ComboboxValue className='w-[200px]' placeholder='Select...' />
       <ComboboxContent>

@@ -46,7 +46,7 @@ const convertDBUserAchievement = (doc: QueryDocumentSnapshot<DocumentData>) => {
 export const useDB = () => {
   const subscribeToGameAchievements = useCallback(
     (callback: (achievements: BaseAchievement[]) => void) => {
-      if (!db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+      if (!db) return () => {};
       const q = query(collectionGroup(db, 'achievements'));
       return onSnapshot(q, (querySnapshot) => {
         const achievements = querySnapshot.docs.map((doc) =>
@@ -63,7 +63,7 @@ export const useDB = () => {
       uid: string | null,
       callback: (achievements: UserAchievement[]) => void,
     ): (() => void) => {
-      if (!uid || !db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+      if (!uid || !db) return () => {};
 
       const q = query(
         collectionGroup(db, 'userAchievements'),
@@ -143,8 +143,8 @@ export const useDB = () => {
     uid: string | null,
     callback: (preferences: UserPreferencesData) => void,
   ): (() => void) => {
-    if (!uid) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
-    if (!db) return () => {}; // eslint-disable-line @typescript-eslint/no-empty-function
+    if (!uid) return () => {};
+    if (!db) return () => {};
 
     const userDoc = doc(db, `users/${uid}`);
 

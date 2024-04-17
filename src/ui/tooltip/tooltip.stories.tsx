@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 
 /** A basic tooltip. */
 export const Default: Story = {
-  render: (_) => (
+  render: () => (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>Hover over me!</TooltipTrigger>
@@ -30,7 +30,7 @@ export const Default: Story = {
 
 /** A tooltip with custom styling. */
 export const Styled: Story = {
-  render: (_) => (
+  render: () => (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>

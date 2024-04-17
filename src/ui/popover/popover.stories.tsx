@@ -22,7 +22,7 @@ export default meta;
 type Story = StoryObj<typeof Popover>;
 
 export const Demo: Story = {
-  render: (_) => (
+  render: () => (
     <Popover>
       <PopoverTrigger>Click me!</PopoverTrigger>
       <PopoverContent className='w-[340px]'>
@@ -73,7 +73,7 @@ export const Demo: Story = {
 };
 
 export const CustomTrigger: Story = {
-  render: (_) => (
+  render: () => (
     <Popover>
       <PopoverTrigger asChild>
         <Button variant='outline'>Open popover</Button>

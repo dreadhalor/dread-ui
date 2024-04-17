@@ -16,6 +16,7 @@ const IframeContext = createContext<IframeContextValue>(
   {} as IframeContextValue,
 );
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useIframe = () => {
   const context = useContext(IframeContext);
   if (!context) {

@@ -27,7 +27,7 @@ export default meta;
 type Story = StoryObj<typeof Card>;
 
 export const Demo: Story = {
-  render: (_) => (
+  render: () => (
     <Card className='w-[350px]'>
       <CardHeader>
         <CardTitle>Create project</CardTitle>

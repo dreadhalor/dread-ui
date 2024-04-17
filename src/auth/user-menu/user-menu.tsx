@@ -24,6 +24,7 @@ const UserMenuContext = createContext<UserMenuContextValue>(
   {} as UserMenuContextValue,
 );
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useUserMenuContext = () => {
   const context = useContext(UserMenuContext);
   if (!context) {

@@ -13,7 +13,7 @@ export default meta;
 type Story = StoryObj;
 
 export const Demo: Story = {
-  render: (_) => (
+  render: () => (
     <IframeProvider>
       <IframeParentDemoComponent>
         <IframeChild
@@ -35,7 +35,7 @@ export const Child: Story = {
       disable: true,
     },
   },
-  render: (_) => (
+  render: () => (
     <IframeProvider>
       <IframeChildDemoComponent />
     </IframeProvider>

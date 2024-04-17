@@ -38,7 +38,7 @@ export const Default: Story = {
 
 /** A disabled slider. */
 export const Disabled: Story = {
-  render: (_) => (
+  render: () => (
     <Slider
       className='w-[300px]'
       defaultValue={[50]}
@@ -51,7 +51,7 @@ export const Disabled: Story = {
 
 /** A range slider, with knobs for min & max. */
 export const RangeSlider: Story = {
-  render: (_) => (
+  render: () => (
     <Slider className='w-[300px]' defaultValue={[20, 60]} max={100} step={1} />
   ),
 };

@@ -22,11 +22,11 @@ export const Demo: Story = {
 };
 
 export const Disabled: Story = {
-  render: (_) => <DatePicker disabled />,
+  render: () => <DatePicker disabled />,
 };
 
 export const DisabledDates: Story = {
-  render: (_) => (
+  render: () => (
     <DatePicker
       disabledDates={
         // disable all days after today
@@ -37,5 +37,5 @@ export const DisabledDates: Story = {
 };
 
 export const DateRangePicker: Story = {
-  render: (_) => <DatePicker mode='range' />,
+  render: () => <DatePicker mode='range' />,
 };

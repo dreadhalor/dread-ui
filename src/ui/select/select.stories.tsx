@@ -48,7 +48,7 @@ export const Demo: Story = {
 
 /** A select with grouped options. */
 export const WithGroups: StoryObj = {
-  render: (_) => (
+  render: () => (
     <Select>
       <SelectTrigger className='w-[180px]'>
         <SelectValue placeholder='Select a food' />
@@ -77,7 +77,7 @@ export const WithGroups: StoryObj = {
 
 /** A disabled select. */
 export const Disabled: StoryObj = {
-  render: (_) => (
+  render: () => (
     <Select disabled>
       <SelectTrigger className='w-[180px]'>
         <SelectValue placeholder='Select a fruit' />
@@ -95,7 +95,7 @@ export const Disabled: StoryObj = {
 
 /** A select with some disabled items. */
 export const DisabledItems: StoryObj = {
-  render: (_) => (
+  render: () => (
     <Select>
       <SelectTrigger className='w-[180px]'>
         <SelectValue placeholder='Select a fruit' />

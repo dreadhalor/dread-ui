@@ -70,7 +70,7 @@ const CommandMenu = (
 );
 
 export const Demo: Story = {
-  render: (_) => (
+  render: () => (
     <Command className='rounded-lg border shadow-md'>{CommandMenu}</Command>
   ),
 };
