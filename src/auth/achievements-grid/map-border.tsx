@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import roughBorderSouth from '@dread-ui/assets/ripped-paper-border-south.png';
-import roughBorderEast from '@dread-ui/assets/ripped-paper-border-east.png';
+import roughBorderSouth from '@dread-ui/assets/ripped-paper-border-south.webp';
+import roughBorderEast from '@dread-ui/assets/ripped-paper-border-east.webp';
 
 type Props = {
   children: React.ReactNode;

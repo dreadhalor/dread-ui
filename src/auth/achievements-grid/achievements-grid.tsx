@@ -3,7 +3,7 @@ import { AchievementSquare } from './achievement-square';
 import { Achievement } from '@dread-ui/types';
 import { useCallback, useEffect, useState } from 'react';
 import MapBorder from './map-border';
-import backgroundImage from '@dread-ui/assets/kid-icarus-background.png';
+import backgroundImage from '@dread-ui/assets/kid-icarus-background.webp';
 
 const AchievementsGrid = () => {
   const { achievements, saveAchievement } = useAchievements();
