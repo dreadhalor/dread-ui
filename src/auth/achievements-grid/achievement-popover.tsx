@@ -72,7 +72,7 @@ const AchievementPopover = ({
             onClick={() => {
               sendMessageToParent({
                 type: 'scroll-to-app',
-                link: `/${achievement.gameId}`,
+                id: achievement.gameId,
               });
             }}
           >
