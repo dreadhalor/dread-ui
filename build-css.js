@@ -1,4 +1,3 @@
-// const fs = require('fs');
 import fs from 'fs';
 import postcss from 'postcss';
 import tailwindcss from 'tailwindcss';
